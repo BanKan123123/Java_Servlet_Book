@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class AbstractModel {
 
-    private int id;
-    private Date created_at;
-    private Date updated_at;
+        private int id;
+        private Date created_at;
+        private Date updated_at;
 
     public AbstractModel() {
     }

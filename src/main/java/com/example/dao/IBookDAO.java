@@ -2,15 +2,14 @@ package com.example.dao;
 
 import com.example.model.BookModel;
 
-import java.awt.print.Book;
 import java.util.List;
 
-public interface IBookDAO {
+public interface IBookDAO extends GenericDAO<BookModel>{
 
     List<BookModel> findAllBooks();
     BookModel findOneBookById(int id);
 
-    void addBook(BookModel bookModel);
+    Long addBook(BookModel bookModel);
 
     void updateBook(BookModel bookModel, int id);
 

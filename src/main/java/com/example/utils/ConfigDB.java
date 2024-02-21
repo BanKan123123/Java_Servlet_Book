@@ -14,11 +14,9 @@ public class ConfigDB {
         final Properties props =  new Properties();
 
         Class.forName("com.mysql.jdbc.Driver");
-
         String theUser = props.getProperty("user");
         String thePassword = props.getProperty("password");
         String theDBUrl = props.getProperty("dburl");
-
 
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ninhnv_novel_en?autoReconnect=true&useSSL=false", "root", "password");
