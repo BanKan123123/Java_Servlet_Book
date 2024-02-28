@@ -62,7 +62,7 @@ public class BookDAO extends AbstractDAO<BookModel> implements IBookDAO {
 
     @Override
     public BookModel findOneBookById(int id) {
-        String sql = "SELECT * FROM chapter, books, author WHERE books.id = ? AND chapter.bookId = books.id AND books.authorId = author.idAuthor ORDER BY chapter.chapterIndex ASC";
+            String sql = "SELECT * FROM chapter, books, author WHERE books.id = ? AND chapter.bookId = books.id AND books.authorId = author.idAuthor ORDER BY chapter.chapterIndex ASC";
         return query(sql, new BookMapper(), id).get(0);
         //        try (Connection conn = ConfigDB.provideConnection()) {
 //            PreparedStatement statement = conn.prepareStatement(sql);

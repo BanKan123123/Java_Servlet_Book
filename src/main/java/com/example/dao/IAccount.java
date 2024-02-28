@@ -8,11 +8,11 @@ public interface IAccount {
 
     List<AccountModel> findAllAccount();
 
-    AccountModel findOneAccount();
+    AccountModel findOneAccount(String username);
 
-    void signInAccount(AccountModel account);
+    AccountModel signInAccount(String username, String password);
 
-    void registerAccount (AccountModel account);
+    void registerAccount(AccountModel account);
 
 
 }

@@ -13,6 +13,6 @@ public interface IBookDAO extends GenericDAO<BookModel>{
 
     void updateBook(BookModel bookModel, int id);
 
-    void deleteBook(int bookModel);
+    void deleteBook(int id);
 
 }

@@ -2,7 +2,6 @@ package com.example.service;
 
 import com.example.model.BookModel;
 
-import java.awt.print.Book;
 import java.util.List;
 
 public interface IBookService {
@@ -14,5 +13,5 @@ public interface IBookService {
 
     BookModel delete(int id);
 
-    BookModel update (BookModel bookModel, int id);
+    BookModel update(BookModel bookModel, int id);
 }

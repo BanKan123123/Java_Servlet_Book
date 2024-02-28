@@ -1,7 +1,6 @@
 package com.example.model;
 
-import java.util.Date;
-
+import java.sql.Timestamp;
 public class BookModel extends AbstractModel {
     private String title, description, imageThumbnail, categories;
     private float rate;
@@ -11,7 +10,7 @@ public class BookModel extends AbstractModel {
 
     }
 
-    public BookModel(int id, String title, String description, String imageThumbnail, float rate, int authorId, String categories, Date createdAt, Date updatedAt) {
+    public BookModel(int id, String title, String description, String imageThumbnail, float rate, int authorId, String categories, Timestamp createdAt, Timestamp updatedAt) {
         super(id, createdAt, updatedAt);
         this.title = title;
         this.description = description;

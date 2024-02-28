@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class AccountModel extends AbstractModel {
@@ -12,7 +13,7 @@ public class AccountModel extends AbstractModel {
 
     }
 
-    public AccountModel(int id, String username, String password, String email, int role, Date createdAt, Date updatedAt) {
+    public AccountModel(int id, String username, String password, String email, int role, Timestamp createdAt, Timestamp updatedAt) {
         super(id, createdAt, updatedAt);
         this.username = username;
         this.password = password;
