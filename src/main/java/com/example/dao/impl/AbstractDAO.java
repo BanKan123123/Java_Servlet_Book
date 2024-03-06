@@ -1,5 +1,6 @@
 package com.example.dao.impl;
 
+import com.example.controller.admin.api.BookAPI;
 import com.example.dao.GenericDAO;
 import com.example.mapper.RowMapper;
 import com.example.utils.ConfigDB;
@@ -7,6 +8,7 @@ import com.example.utils.ConfigDB;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
     @Override
@@ -14,9 +16,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         List<T> results = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
-
         ResultSet resultSet = null;
-
         try {
             connection = ConfigDB.provideConnection();
             statement = connection.prepareStatement(sql);
@@ -27,6 +27,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             }
             return results;
         } catch (Exception ex) {
+
             return null;
         } finally {
             try {
@@ -56,6 +57,8 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     statement.setTimestamp(index, (Timestamp) parameter);
                 } else if (parameter instanceof Float) {
                     statement.setFloat(index, (Float) parameter);
+                } else if (parameter instanceof Long) {
+                    statement.setLong(index, (Long) parameter);
                 }
             }
         } catch (SQLException e) {

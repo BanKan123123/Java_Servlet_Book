@@ -27,9 +27,12 @@ public class AccountDAO extends AbstractDAO<AccountModel> implements IAccount {
     @Override
     public AccountModel signInAccount(String username, String password) {
         String sql = "SELECT * FROM account WHERE `username` = ? AND `password` = ?";
-        return query(sql, new AccountMapper(), username, password).get(0);
+        if (!query(sql, new AccountMapper(), username, password).isEmpty()) {
+            return query(sql, new AccountMapper(), username, password).get(0);
+        } else {
+            return null;
+        }
     }
-
     @Override
     public void registerAccount(AccountModel account) {
         String sql = "INSERT INTO account (username, password, email, role) VALUE (? , ? , ? , 0)";

@@ -11,7 +11,6 @@ public class ChapterDAO extends AbstractDAO<ChapterModel> implements IChapterDAO
     @Override
     public List<ChapterModel> findAllChapter() {
         String sql = "SELECT * FROM chapter ORDER BY titleChapter ASC";
-
         return query(sql, new ChapterMapper());
     }
 

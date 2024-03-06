@@ -3,4 +3,5 @@
     <excludes>
         <pattern>/api*</pattern>
     </excludes>
+
 </decorators>
