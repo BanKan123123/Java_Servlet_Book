@@ -36,15 +36,14 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookModel delete(int id) {
+    public void delete(int id) {
         bookDAO.deleteBook(id);
-        return this.findOneBookById(id);
     }
 
     @Override
     public BookModel update(BookModel bookModel, int id) {
         bookDAO.updateBook(bookModel, id);
-        return bookModel;
+        return findOneBookById(id);
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -81,28 +80,30 @@ public class BookService implements IBookService {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         BookModel bookModel = HttpUtil.of(req.getReader()).toModel(BookModel.class);
-
         if (pathInfo != null && !pathInfo.isEmpty()) {
-            String requestString = pathInfo.substring(1);
-            if (requestString.equals("update")) {
-                String idString = pathInfo.substring(2);
-                int id = Integer.parseInt(idString);
-                BookModel bookModelRes = update(bookModel, id);
-                mapper.writeValue(resp.getOutputStream(), bookModelRes);
+            String[] path = pathInfo.split("/");
+            if (path.length == 3) {
+                if (path[1].equals("update")) {
+                    int id = Integer.parseInt(path[2]);
+                    BookModel bookModelRes = update(bookModel, id);
+                    mapper.writeValue(resp.getOutputStream(), bookModelRes);
+                }
             }
         }
     }
 
     public void delete(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         if (pathInfo != null && !pathInfo.isEmpty()) {
-            String idString = pathInfo.substring(1);
-            int id = Integer.parseInt(idString);
-            BookModel bookModel = delete(id);
-            mapper.writeValue(resp.getOutputStream(), bookModel);
+            String[] path = pathInfo.split("/");
+            if (path.length == 3) {
+                if (path[1].equals("delete")) {
+                    int id = Integer.parseInt(path[2]);
+                    delete(id);
+                }
+            }
         }
     }
 }

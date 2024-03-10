@@ -17,14 +17,27 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     private final AccountService accountService = new AccountService();
 
+    private String message;
+
     public void init() {
-        String message = "Username or password is invalid";
+        message = "Username or password is invalid";
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rq = req.getRequestDispatcher("/views/web/login.jsp");
-        rq.forward(req, resp);
+        String action = req.getParameter("action");
+        if (action != null && action.equals("login")) {
+            String status = req.getParameter("status");
+            if (status != null && status.equals("false")) {
+                req.setAttribute("message", message);
+                req.setAttribute("alert", "danger");
+            }
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/web/login.jsp");
+            requestDispatcher.forward(req, resp);
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/web/home.jsp");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -38,7 +51,7 @@ public class LoginController extends HttpServlet {
             AccountModel accountModel = FormUtils.toModel(AccountModel.class, req);
             AccountModel accountModel1 = accountService.login(accountModel.getUsername(), accountModel.getPassword());
             if (accountModel1 == null) {
-                resp.sendRedirect(req.getContextPath() + "/login/?action=login&status=false");
+                resp.sendRedirect(req.getContextPath() + "/login?action=login&status=false");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/home");
             }

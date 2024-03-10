@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface IChapterService {
 
-    ChapterModel findOneChapterById (int id);
+    ChapterModel findOneChapterBySlug (String slug);
 
     List<ChapterModel> findAllChapter ();
 
     ChapterModel save (ChapterModel chapterModel);
 
-    ChapterModel delete (int id);
+    void delete (int id);
 
     ChapterModel update (ChapterModel chapterModel, int id);
 }

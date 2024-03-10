@@ -1,12 +1,11 @@
 package com.example.service.impl;
 
-import com.example.dao.impl.ChapterDAO;
+import com.example.dao.impl.AuthorDAO;
+import com.example.model.AuthorModel;
 import com.example.model.BookModel;
-import com.example.model.ChapterModel;
-import com.example.service.IChapterService;
+import com.example.service.IAuthorService;
 import com.example.utils.HttpUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -14,49 +13,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChapterService implements IChapterService {
-
-    private final ChapterDAO chapterDAO = new ChapterDAO();
+public class AuthorChapter implements IAuthorService {
+    private final AuthorDAO authorDAO = new AuthorDAO();
 
     @Override
-    public ChapterModel findOneChapterBySlug(String slug) {
-        return chapterDAO.findOneChapter(slug);
+    public AuthorModel findOneAuthorBySlug(String slug) {
+        return authorDAO.findAuthorBySlug(slug);
     }
 
     @Override
-    public List<ChapterModel> findAllChapter() {
-        return chapterDAO.findAllChapter();
+    public List<AuthorModel> findAllAuthors() {
+        return authorDAO.findAllAuthors();
     }
 
     @Override
-    public ChapterModel save(ChapterModel chapterModel) {
-        chapterDAO.addChapter(chapterModel);
-        return findOneChapterBySlug(chapterModel.getSlug());
+    public AuthorModel save(AuthorModel authorModel) {
+        authorDAO.addAuthor(authorModel);
+        return findOneAuthorBySlug(authorModel.getSlug());
     }
 
     @Override
-    public void delete(int id) {
-        chapterDAO.deleteChapter(id);
+    public void delete(String slug) {
+        authorDAO.deleteAuthor(slug);
     }
 
     @Override
-    public ChapterModel update(ChapterModel chapterModel, int id) {
-        chapterDAO.updateChapter(chapterModel, id);
-        return findOneChapterBySlug(chapterModel.getSlug());
+    public AuthorModel update(AuthorModel authorModel, String slug) {
+        authorDAO.updateAuthor(authorModel, slug);
+        return findOneAuthorBySlug(slug); // Thay doi slug thi khong the tim thay.
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
+
         if (pathInfo == null || pathInfo.equals("/")) {
-            ArrayList<ChapterModel> listBooks = (ArrayList<ChapterModel>) findAllChapter();
-            mapper.writeValue(resp.getOutputStream(), listBooks);
+            ArrayList<AuthorModel> listAuthors = (ArrayList<AuthorModel>) findAllAuthors();
+            mapper.writeValue(resp.getOutputStream(), listAuthors);
         } else {
             String slug = pathInfo.substring(1);
-            ChapterModel chapterModel = findOneChapterBySlug(slug);
-            if (chapterModel != null) {
-                mapper.writeValue(resp.getOutputStream(), chapterModel);
+            AuthorModel authorModel = findOneAuthorBySlug(slug);
+            if (authorModel != null) {
+                mapper.writeValue(resp.getOutputStream(), authorModel);
             } else {
                 resp.setStatus(404);
             }
@@ -67,30 +66,29 @@ public class ChapterService implements IChapterService {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8"); // Để khi mà thằng client nó có chuỗi tiếng việt
         resp.setContentType("application/json"); // Trả kết quả cho thằng client, và cụ thể là trả về json, thì thằng server định nghĩa một header để thằng Client hiểu.
-        ChapterModel chapterModel = HttpUtil.of(req.getReader()).toModel(ChapterModel.class);
-        ChapterModel chapterModel1 = save(chapterModel);
-        mapper.writeValue(resp.getOutputStream(), chapterModel1);
+        AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class);
+        AuthorModel authorModel1 = save(authorModel);
+        mapper.writeValue(resp.getOutputStream(), authorModel1);
     }
 
-    public void update(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void updateData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-        ChapterModel chapterModel = HttpUtil.of(req.getReader()).toModel(ChapterModel.class);
-
+        AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class);
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("update")) {
-                    int id = Integer.parseInt(path[2]);
-                    ChapterModel chapterModelRes = update(chapterModel, id);
-                    mapper.writeValue(resp.getOutputStream(), chapterModelRes);
+                    String slug = path[2];
+                    AuthorModel authorModel1 = update(authorModel, slug);
+                    mapper.writeValue(resp.getOutputStream(), authorModel1);
                 }
             }
         }
     }
 
-    public void delete(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void deleteData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -98,10 +96,11 @@ public class ChapterService implements IChapterService {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("delete")) {
-                    int id = Integer.parseInt(path[2]);
-                    delete(id);
+                    String slug = path[2];
+                    delete(slug);
                 }
             }
         }
     }
+
 }

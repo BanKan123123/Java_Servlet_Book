@@ -15,6 +15,7 @@ public class AccountMapper implements RowMapper<AccountModel> {
             accountModel.setUsername(resultSet.getString("username"));
             accountModel.setPassword(resultSet.getString("password"));
             accountModel.setEmail(resultSet.getString("email"));
+            accountModel.setPhoneNumber(resultSet.getString("phoneNumber"));
             accountModel.setRole(resultSet.getInt("role"));
             accountModel.setCreated_at(resultSet.getTimestamp("created_at"));
             accountModel.setUpdated_at(resultSet.getTimestamp("updated_at"));

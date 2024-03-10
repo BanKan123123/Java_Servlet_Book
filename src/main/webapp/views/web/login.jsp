@@ -69,11 +69,11 @@
                         </c:if>
                         <div class="form-group">
                             <input type="text" placeholder="Email hoặc số điện thoại" name="username"
-                                   id="username" class="form-control">
+                                   id="username" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <input name="password" type="password" placeholder="Mật khẩu" id="password"
-                                   class="form-control">
+                                   class="form-control" required>
                         </div>
                         <div class="form-group form-custom">
                             <span>Chưa có tài khoản ?</span> <a href="register" class="text-info">Đăng ký </a>

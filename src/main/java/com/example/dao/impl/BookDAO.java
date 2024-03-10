@@ -21,20 +21,20 @@ public class BookDAO extends AbstractDAO<BookModel> implements IBookDAO {
 
     @Override
     public BookModel findOneBookById(int id) {
-        String sql = "SELECT * FROM chapter, books, author WHERE books.id = ? AND chapter.bookId = books.id AND books.authorId = author.idAuthor ORDER BY chapter.chapterIndex ASC";
+        String sql = "SELECT * FROM books WHERE books.id = ?";
         return query(sql, new BookMapper(), id).get(0);
     }
 
     @Override
     public Long addBook(BookModel bookModel) {
-        String sql = "INSERT INTO books (title, description, imageThumbnail, rate, authorId, categories) VALUES (?, ? ,? ,? ,? ,?)";
-        return insert(sql, bookModel.getTitle(), bookModel.getDescription(), bookModel.getImageThumbnail(), bookModel.getRate(), bookModel.getAuthorId(), bookModel.getCategories());
+        String sql = "INSERT INTO books (title, slug , description, imageThumbnail, rate, liked, authorId, categories, quantity) VALUES (?, ? ,? ,? ,? ,?, ? ,? , ?)";
+        return insert(sql, bookModel.getTitle(), bookModel.getSlug(), bookModel.getDescription(), bookModel.getImageThumbnail(), bookModel.getRate(), bookModel.getLiked(), bookModel.getAuthorId(), bookModel.getCategories(), bookModel.getQuantity());
     }
 
     @Override
     public void updateBook(BookModel bookModel, int id) {
-        String sql = "UPDATE books SET `title` = ?, `description` = ?, `imageThumbnail` = ?, `rate` = ?, `authorId` = ?, categories = ? WHERE `id` = ?";
-        update(sql, bookModel.getTitle(), bookModel.getDescription(), bookModel.getImageThumbnail(), bookModel.getRate(), bookModel.getAuthorId(), bookModel.getCategories(), id);
+        String sql = "UPDATE books SET `title` = ?, `slug` = ?, `description` = ?, `imageThumbnail` = ?, `rate` = ?, `liked` = ? ,`authorId` = ?, categories = ?, `quantity` = ? WHERE `id` = ?";
+        update(sql, bookModel.getTitle(), bookModel.getSlug(), bookModel.getDescription(), bookModel.getImageThumbnail(), bookModel.getRate(), bookModel.getLiked(), bookModel.getAuthorId(), bookModel.getCategories(), bookModel.getQuantity(), id);
     }
 
     @Override

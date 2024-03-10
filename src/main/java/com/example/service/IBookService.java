@@ -11,7 +11,7 @@ public interface IBookService {
 
     BookModel save(BookModel bookModel);
 
-    BookModel delete(int id);
+    void delete(int id);
 
     BookModel update(BookModel bookModel, int id);
 }

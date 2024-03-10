@@ -3,7 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form using POST Method</title>
+    <title>Register</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <style>
     body {
@@ -70,15 +73,15 @@
                         <h3 class="text-center text-info text">Đăng ký</h3>
                         <div class="form-group">
                             <input type="text" placeholder="Tài khoản..." name="username"
-                                   id="username" class="form-control"/>
+                                   id="username" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <input name="password" type="password" placeholder="Mật khẩu..." id="password"
-                                   class="form-control"/>
+                                   class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <input name="email" type="email" placeholder="Email..." id="email"
-                                   class="form-control"/>
+                                   class="form-control" required/>
                         </div>
                         <div class="form-group form-custom">
                             <span>Đã có tài khoản ?</span> <a href="login" class="text-info">Đăng nhập </a>

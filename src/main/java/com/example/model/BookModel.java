@@ -1,23 +1,27 @@
 package com.example.model;
 
 import java.sql.Timestamp;
+
 public class BookModel extends AbstractModel {
-    private String title, description, imageThumbnail, categories;
+    private String title, slug, description, imageThumbnail, categories;
     private float rate;
-    private int authorId;
+    private int authorId, liked, quantity;
 
     public BookModel() {
 
     }
 
-    public BookModel(int id, String title, String description, String imageThumbnail, float rate, int authorId, String categories, Timestamp createdAt, Timestamp updatedAt) {
-        super(id, createdAt, updatedAt);
+    public BookModel(int id, Timestamp created_at, Timestamp updated_at, String title, String slug, String description, String imageThumbnail, String categories, float rate, int authorId, int liked, int quantity) {
+        super(id, created_at, updated_at);
         this.title = title;
+        this.slug = slug;
         this.description = description;
         this.imageThumbnail = imageThumbnail;
         this.categories = categories;
         this.rate = rate;
         this.authorId = authorId;
+        this.liked = liked;
+        this.quantity = quantity;
     }
 
     public String getTitle() {
@@ -43,6 +47,7 @@ public class BookModel extends AbstractModel {
     public void setImageThumbnail(String imageThumbnail) {
         this.imageThumbnail = imageThumbnail;
     }
+
     public String getCategories() {
         return categories;
     }
@@ -50,6 +55,7 @@ public class BookModel extends AbstractModel {
     public void setCategories(String categories) {
         this.categories = categories;
     }
+
     public float getRate() {
         return rate;
     }
@@ -64,6 +70,30 @@ public class BookModel extends AbstractModel {
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public int getLiked() {
+        return liked;
+    }
+
+    public void setLiked(int liked) {
+        this.liked = liked;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

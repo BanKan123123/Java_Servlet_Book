@@ -5,19 +5,20 @@ public class ChapterModel extends AbstractModel {
 
     private int bookId, chapterIndex;
 
-    private String titleChapter, slugChapter, data, audioUrl;
+    private String title, slug, data, audioUrl;
 
-    public ChapterModel(int id, Timestamp created_at, Timestamp updated_at, int bookId, int chapterIndex, String titleChapter, String slugChapter, String data, String audioUrl) {
+
+    public ChapterModel() {
+    }
+
+    public ChapterModel(int id, Timestamp created_at, Timestamp updated_at, int bookId, int chapterIndex, String title, String slug, String data, String audioUrl) {
         super(id, created_at, updated_at);
         this.bookId = bookId;
         this.chapterIndex = chapterIndex;
-        this.titleChapter = titleChapter;
-        this.slugChapter = slugChapter;
+        this.title = title;
+        this.slug = slug;
         this.data = data;
         this.audioUrl = audioUrl;
-    }
-
-    public ChapterModel() {
     }
 
     public int getBookId() {
@@ -36,20 +37,20 @@ public class ChapterModel extends AbstractModel {
         this.chapterIndex = chapterIndex;
     }
 
-    public String getTitleChapter() {
-        return titleChapter;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitleChapter(String titleChapter) {
-        this.titleChapter = titleChapter;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getSlugChapter() {
-        return slugChapter;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setSlugChapter(String slugChapter) {
-        this.slugChapter = slugChapter;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getData() {

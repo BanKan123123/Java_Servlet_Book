@@ -9,7 +9,7 @@ import java.util.List;
 public class AccountDAO extends AbstractDAO<AccountModel> implements IAccount {
     @Override
     public List<AccountModel> findAllAccount() {
-        String sql = "SELECT * FROM account";
+        String sql = "SELECT * FROM account ORDER BY username ASC";
         return query(sql, new AccountMapper());
     }
 
@@ -33,9 +33,10 @@ public class AccountDAO extends AbstractDAO<AccountModel> implements IAccount {
             return null;
         }
     }
+
     @Override
     public void registerAccount(AccountModel account) {
-        String sql = "INSERT INTO account (username, password, email, role) VALUE (? , ? , ? , 0)";
-        insert(sql, account.getUsername(), account.getPassword(), account.getEmail());
+        String sql = "INSERT INTO account (username, password, email, phoneNumber, role) VALUE (? , ? , ?, ?, 0)";
+        insert(sql, account.getUsername(), account.getPassword(), account.getEmail(), account.getPhoneNumber());
     }
 }

@@ -17,8 +17,8 @@ public class ChapterMapper implements RowMapper<ChapterModel> {
             ChapterModel chapterModel = new ChapterModel();
 
             chapterModel.setId((int) resultSet.getLong("id"));
-            chapterModel.setTitleChapter(resultSet.getString("titleChapter"));
-            chapterModel.setSlugChapter(resultSet.getString("slugChapter"));
+            chapterModel.setTitle(resultSet.getString("title"));
+            chapterModel.setSlug(resultSet.getString("slug"));
             chapterModel.setData(resultSet.getString("data"));
             chapterModel.setBookId((int) resultSet.getLong("bookId"));
             chapterModel.setChapterIndex((int) resultSet.getLong("chapterIndex"));

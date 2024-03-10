@@ -35,7 +35,7 @@ public class AccountService implements IAccountService {
     @Override
     public AccountModel save(AccountModel accountModel) {
         accountDAO.registerAccount(accountModel);
-        return accountModel;
+        return findOneAccount(accountModel.getUsername());
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {

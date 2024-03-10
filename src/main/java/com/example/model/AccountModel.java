@@ -4,20 +4,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class AccountModel extends AbstractModel {
-    private String username;
-    private String password;
-    private String email;
+    private String username, password, email, phoneNumber;
     private int role = 0;
 
     public AccountModel() {
 
     }
 
-    public AccountModel(int id, String username, String password, String email, int role, Timestamp createdAt, Timestamp updatedAt) {
+    public AccountModel(int id, String username, String password, String email, String phoneNumber, int role, Timestamp createdAt, Timestamp updatedAt) {
         super(id, createdAt, updatedAt);
         this.username = username;
         this.password = password;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.role = role;
     }
 
@@ -43,6 +42,14 @@ public class AccountModel extends AbstractModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getRole() {
