@@ -13,9 +13,9 @@ public interface IChapterDAO extends GenericDAO<ChapterModel>{
 
     Long addChapter (ChapterModel chapterModel);
 
-    void updateChapter (ChapterModel chapterModel, int id);
+    void updateChapter (ChapterModel chapterModel, String slug);
 
-    void deleteChapter (int id);
+    void deleteChapter (String slug);
 
 
 

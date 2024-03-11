@@ -9,10 +9,12 @@ public interface IBookDAO extends GenericDAO<BookModel>{
     List<BookModel> findAllBooks();
     BookModel findOneBookById(int id);
 
+    BookModel findOneBookBySlug (String slug);
+
     Long addBook(BookModel bookModel);
 
-    void updateBook(BookModel bookModel, int id);
+    void updateBook(BookModel bookModel, String id);
 
-    void deleteBook(int id);
+    void deleteBook(String slug);
 
 }

@@ -9,9 +9,11 @@ public interface IBookService {
 
     List<BookModel> findAllBooks();
 
+    BookModel findOneBookBySlug (String slug);
+
     BookModel save(BookModel bookModel);
 
-    void delete(int id);
+    void delete(String slug);
 
-    BookModel update(BookModel bookModel, int id);
+    BookModel update(BookModel bookModel, String slug);
 }

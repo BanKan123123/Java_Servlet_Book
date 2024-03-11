@@ -3,7 +3,6 @@ package com.example.model;
 import java.sql.Timestamp;
 
 public class AbstractModel {
-
         private int id;
         private Timestamp created_at;
         private Timestamp updated_at;

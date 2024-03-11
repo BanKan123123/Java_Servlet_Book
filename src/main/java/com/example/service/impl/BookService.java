@@ -4,8 +4,9 @@ import com.example.dao.impl.BookDAO;
 import com.example.model.BookModel;
 import com.example.service.IBookService;
 import com.example.utils.HttpUtil;
+import com.example.utils.ResponseAPIUtils;
+import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class BookService implements IBookService {
     private final BookDAO bookDAO = new BookDAO();
+    private final ResponseAPIUtils<BookModel> responseAPIUtils = new ResponseAPIUtils<>();
 
     public BookService() {
     }
@@ -30,20 +32,25 @@ public class BookService implements IBookService {
     }
 
     @Override
+    public BookModel findOneBookBySlug(String slug) {
+        return bookDAO.findOneBookBySlug(slug);
+    }
+
+    @Override
     public BookModel save(BookModel bookModel) {
         bookDAO.addBook(bookModel);
-        return bookModel;
+        return findOneBookBySlug(bookModel.getSlug());
     }
 
     @Override
-    public void delete(int id) {
-        bookDAO.deleteBook(id);
+    public void delete(String slug) {
+        bookDAO.deleteBook(slug);
     }
 
     @Override
-    public BookModel update(BookModel bookModel, int id) {
-        bookDAO.updateBook(bookModel, id);
-        return findOneBookById(id);
+    public BookModel update(BookModel bookModel, String slug) {
+        bookDAO.updateBook(bookModel, slug);
+        return findOneBookBySlug(slug);
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -51,59 +58,112 @@ public class BookService implements IBookService {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
+        WrapperResponse<BookModel> wrapperResponse = new WrapperResponse<>();
+
         if (pathInfo == null || pathInfo.equals("/")) {
             ArrayList<BookModel> listBooks = (ArrayList<BookModel>) findAllBooks();
-            mapper.writeValue(resp.getOutputStream(), listBooks);
+            responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
         } else {
-            String idString = pathInfo.substring(1);
-            int id = Integer.parseInt(idString);
-            BookModel bookModel = findOneBookById(id);
+            String slug = pathInfo.substring(1);
+            BookModel bookModel = findOneBookBySlug(slug);
             if (bookModel != null) {
-                mapper.writeValue(resp.getOutputStream(), bookModel);
+                ArrayList<BookModel> books = new ArrayList<>();
+                books.add(bookModel);
+                responseAPIUtils.getDataSuccess(wrapperResponse, books, resp);
             } else {
-                resp.setStatus(404);
+                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
             }
         }
+        mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 
     public void insertData(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8"); // Để khi mà thằng client nó có chuỗi tiếng việt
         resp.setContentType("application/json"); // Trả kết quả cho thằng client, và cụ thể là trả về json, thì thằng server định nghĩa một header để thằng Client hiểu.
+        WrapperResponse<BookModel> wrapperResponse = new WrapperResponse<>();
         BookModel bookModel = HttpUtil.of(req.getReader()).toModel(BookModel.class);
-        BookModel bookModel1 = save(bookModel);
-        mapper.writeValue(resp.getOutputStream(), bookModel1);
+
+        if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getAuthorId() == 0 || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
+            responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
+        } else {
+            BookModel findBook = findOneBookBySlug(bookModel.getSlug());
+            if (findBook == null) {
+                BookModel bookModel1 = save(bookModel);
+                ArrayList<BookModel> books = new ArrayList<>();
+                books.add(bookModel1);
+                responseAPIUtils.insertSuccess(wrapperResponse, books, resp);
+            } else {
+                responseAPIUtils.duplicateDataAPI(wrapperResponse, resp);
+            }
+        }
+        mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 
     public void update(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
+        WrapperResponse<BookModel> wrapperResponse = new WrapperResponse<>();
         BookModel bookModel = HttpUtil.of(req.getReader()).toModel(BookModel.class);
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("update")) {
-                    int id = Integer.parseInt(path[2]);
-                    BookModel bookModelRes = update(bookModel, id);
-                    mapper.writeValue(resp.getOutputStream(), bookModelRes);
+                    if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getAuthorId() == 0 || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
+                        responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
+                    } else {
+                        ArrayList<BookModel> books = new ArrayList<>();
+                        String slug = path[2];
+                        if (findOneBookBySlug(slug) != null) {
+                            if (findOneBookBySlug(bookModel.getSlug()) == null) {
+                                BookModel bookModel1 = update(bookModel, slug);
+                                books.add(bookModel1);
+                                responseAPIUtils.updateSuccess(wrapperResponse, books, resp);
+                            } else {
+                                responseAPIUtils.duplicateDataAPI(wrapperResponse, resp);
+                            }
+                        } else {
+                            responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                        }
+                    }
+                } else {
+                    responseAPIUtils.ServerError(wrapperResponse, resp);
                 }
+            } else {
+                responseAPIUtils.ServerError(wrapperResponse, resp);
             }
+        } else {
+            responseAPIUtils.ServerError(wrapperResponse, resp);
         }
+        mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 
     public void delete(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
+        WrapperResponse<BookModel> wrapperResponse = new WrapperResponse<>();
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("delete")) {
-                    int id = Integer.parseInt(path[2]);
-                    delete(id);
+                    String slug = path[2];
+                    if (findOneBookBySlug(slug) != null) {
+                        delete(slug);
+                        responseAPIUtils.deleteSuccess(wrapperResponse, resp);
+                    } else {
+                        responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                    }
+                } else {
+                    responseAPIUtils.ServerError(wrapperResponse, resp);
                 }
+            } else {
+                responseAPIUtils.ServerError(wrapperResponse, resp);
             }
+        } else {
+            responseAPIUtils.ServerError(wrapperResponse, resp);
         }
+        mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 }

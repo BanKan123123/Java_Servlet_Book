@@ -9,10 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns =  {"/api-admin-category/*"})
+@WebServlet(urlPatterns = {"/api-admin-category/*"})
 public class CategoryAPI extends HttpServlet {
 
     private final CategoryService categoryService = new CategoryService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
@@ -20,18 +21,18 @@ public class CategoryAPI extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         categoryService.insertData(req, resp);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         categoryService.deleteData(pathInfo, req, resp);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         categoryService.updateData(pathInfo, req, resp);
     }
