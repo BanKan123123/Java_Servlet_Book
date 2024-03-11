@@ -2,7 +2,6 @@ package com.example.dao.impl;
 
 import com.example.dao.IChapterDAO;
 import com.example.mapper.ChapterMapper;
-import com.example.mapper.RowMapper;
 import com.example.model.ChapterModel;
 
 import java.util.List;

@@ -3,13 +3,6 @@ package com.example.dao.impl;
 import com.example.dao.IBookDAO;
 import com.example.mapper.BookMapper;
 import com.example.model.BookModel;
-import com.example.utils.ConfigDB;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public class BookDAO extends AbstractDAO<BookModel> implements IBookDAO {

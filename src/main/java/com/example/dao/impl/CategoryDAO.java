@@ -2,7 +2,6 @@ package com.example.dao.impl;
 
 import com.example.dao.ICategoryDAO;
 import com.example.mapper.CategoryMapper;
-import com.example.model.AbstractModel;
 import com.example.model.CategoryModel;
 
 import java.util.List;

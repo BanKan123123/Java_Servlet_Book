@@ -1,6 +1,5 @@
 package com.example.dao;
 
-import com.example.model.BookModel;
 import com.example.model.ChapterModel;
 
 import java.util.List;
