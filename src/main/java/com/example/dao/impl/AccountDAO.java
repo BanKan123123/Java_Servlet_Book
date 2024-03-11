@@ -36,7 +36,7 @@ public class AccountDAO extends AbstractDAO<AccountModel> implements IAccount {
 
     @Override
     public void registerAccount(AccountModel account) {
-        String sql = "INSERT INTO account (username, password, email, phoneNumber, role) VALUE (? , ? , ?, ?, 0)";
+        String sql = "INSERT INTO account (username, password, email, phoneNumber, role) VALUES (? , ? , ?, ?, 0)";
         insert(sql, account.getUsername(), account.getPassword(), account.getEmail(), account.getPhoneNumber());
     }
 }

@@ -35,13 +35,13 @@ public class RegisterController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-//        String phoneNumber = req.getParameter("phone-number");
+        String phoneNumber = req.getParameter("phoneNumber");
 
         JsonObject object = new JsonObject();
         object.addProperty("username", username);
         object.addProperty("password", password);
         object.addProperty("email", email);
-//        object.addProperty("phoneNumber", phoneNumber);
+        object.addProperty("phoneNumber", phoneNumber);
 
         URL url = new URL(urlAPI);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -64,7 +64,7 @@ public class RegisterController extends HttpServlet {
             if (responseBuilder == null) {
 
             } else {
-                resp.sendRedirect(req.getContextPath() + "/home");
+                resp.sendRedirect(req.getContextPath() + "/login");
             }
         }
 

@@ -64,13 +64,9 @@ public class AccountService implements IAccountService {
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 
-    public void registerAccount(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void registerAccount(AccountModel accountModel, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        req.setCharacterEncoding("UTF-8"); // Để khi mà thằng client nó có chuỗi tiếng việt
-        resp.setContentType("application/json"); // Trả kết quả cho thằng client, và cụ thể là trả về json, thì thằng server định nghĩa một header để thằng Client hiểu.
         WrapperResponse<AccountModel> wrapperResponse = new WrapperResponse<>();
-        AccountModel accountModel = HttpUtil.of(req.getReader()).toModel(AccountModel.class);
-
         if (accountModel.getUsername() == null || accountModel.getUsername().isEmpty() || accountModel.getPassword() == null || accountModel.getPassword().isEmpty() || accountModel.getEmail() == null || accountModel.getEmail().isEmpty()) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
         } else {
@@ -98,7 +94,7 @@ public class AccountService implements IAccountService {
         } else {
             String reqValue = pathInfo.substring(1);
             if (reqValue.equals("register")) {
-                this.registerAccount(req, resp);
+                this.registerAccount(accountModel, req, resp);
             } else if (reqValue.equals("login")) {
                 if (accountModel.getUsername() == null || accountModel.getUsername().isEmpty() || accountModel.getPassword() == null || accountModel.getPassword().isEmpty()) {
                     responseAPIUtils.requiredDataAPI(wrapperResponse, resp);

@@ -52,18 +52,6 @@
     }
 </style>
 <body>
-<%--<form action="register" method="post">--%>
-<%--    <label for="username">Name:</label>--%>
-<%--    <input type="text" id="username" name="username" required><br><br>--%>
-<%--    <label for="password">Name:</label>--%>
-<%--    <input type="password" id="password" name="password" required><br><br>--%>
-<%--    <label for="email">Email:</label>--%>
-<%--    <input type="email" id="email" name="email" required><br><br>--%>
-<%--&lt;%&ndash;    <label for="phoneNumber">Email:</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;    <input type="number" id="phoneNumber" name="phone-number" required><br><br>&ndash;%&gt;--%>
-<%--    <input type="submit" value="Submit">--%>
-<%--</form>--%>
-
 <div id="login">
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center">
@@ -81,6 +69,10 @@
                         </div>
                         <div class="form-group">
                             <input name="email" type="email" placeholder="Email..." id="email"
+                                   class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <input name="phoneNumber" type="number" placeholder="Phone number..." id="phoneNumber"
                                    class="form-control" required/>
                         </div>
                         <div class="form-group form-custom">
