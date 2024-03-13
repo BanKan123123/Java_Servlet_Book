@@ -25,6 +25,18 @@ public class AccountDAO extends AbstractDAO<AccountModel> implements IAccount {
     }
 
     @Override
+    public AccountModel findOneById(String id) {
+        String sql = "SELECT * FROM account WHERE `id` = ?";
+
+        if (!query(sql, new AccountMapper(), id).isEmpty()) {
+            return query(sql, new AccountMapper(), id).get(0);
+        } else {
+            return null;
+        }
+    }
+
+
+    @Override
     public AccountModel signInAccount(String username, String password) {
         String sql = "SELECT * FROM account WHERE `username` = ? AND `password` = ?";
         if (!query(sql, new AccountMapper(), username, password).isEmpty()) {

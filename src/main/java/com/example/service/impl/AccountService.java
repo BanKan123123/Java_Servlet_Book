@@ -64,7 +64,7 @@ public class AccountService implements IAccountService {
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
 
-    public void registerAccount(AccountModel accountModel, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void registerAccount(AccountModel accountModel, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         WrapperResponse<AccountModel> wrapperResponse = new WrapperResponse<>();
         if (accountModel.getUsername() == null || accountModel.getUsername().isEmpty() || accountModel.getPassword() == null || accountModel.getPassword().isEmpty() || accountModel.getEmail() == null || accountModel.getEmail().isEmpty()) {
@@ -94,7 +94,7 @@ public class AccountService implements IAccountService {
         } else {
             String reqValue = pathInfo.substring(1);
             if (reqValue.equals("register")) {
-                this.registerAccount(accountModel, req, resp);
+                this.registerAccount(accountModel, resp);
             } else if (reqValue.equals("login")) {
                 if (accountModel.getUsername() == null || accountModel.getUsername().isEmpty() || accountModel.getPassword() == null || accountModel.getPassword().isEmpty()) {
                     responseAPIUtils.requiredDataAPI(wrapperResponse, resp);

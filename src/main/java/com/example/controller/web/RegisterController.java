@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
     String urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-account/register";
@@ -30,7 +31,6 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-        ObjectMapper mapper = new ObjectMapper();
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -38,10 +38,10 @@ public class RegisterController extends HttpServlet {
         String phoneNumber = req.getParameter("phoneNumber");
 
         JsonObject object = new JsonObject();
-        object.addProperty("username", username);
-        object.addProperty("password", password);
-        object.addProperty("email", email);
-        object.addProperty("phoneNumber", phoneNumber);
+        object.addProperty("username", username.trim());
+        object.addProperty("password", password.trim());
+        object.addProperty("email", email.trim());
+        object.addProperty("phoneNumber", phoneNumber.trim());
 
         URL url = new URL(urlAPI);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -61,13 +61,10 @@ public class RegisterController extends HttpServlet {
             while ((responseLine = br.readLine()) != null) {
                 responseBuilder.append(responseLine.trim());
             }
-            if (responseBuilder == null) {
-
-            } else {
-                resp.sendRedirect(req.getContextPath() + "/login");
+            if (responseBuilder != null) {
+                resp.sendRedirect(req.getContextPath() + "/login?action=login");
             }
         }
-
         connection.disconnect();
     }
 }
