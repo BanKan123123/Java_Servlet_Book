@@ -1,6 +1,5 @@
 package com.example.controller.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -63,7 +62,6 @@ public class RegisterController extends HttpServlet {
             }
             if (responseBuilder != null) {
                 resp.sendRedirect(req.getContextPath() + "/login?action=login");
-                ObjectMapper mapper = new ObjectMapper();
             }
         }
         connection.disconnect();

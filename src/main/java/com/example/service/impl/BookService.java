@@ -7,13 +7,11 @@ import com.example.utils.HttpUtil;
 import com.example.utils.ResponseAPIUtils;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class BookService implements IBookService {

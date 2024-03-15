@@ -1,11 +1,8 @@
 package com.example.mapper;
 
-import com.example.controller.admin.api.ChapterApi;
-import com.example.model.AuthorModel;
 import com.example.model.BookModel;
 import com.example.model.ChapterModel;
 
-import javax.swing.tree.TreePath;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

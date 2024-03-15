@@ -40,11 +40,10 @@ public class LoginController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         String action = req.getParameter("action");
-        ObjectMapper objectMapper = new ObjectMapper();
 
         if (action != null && action.equals("login")) {
             AccountModel accountModel = FormUtils.toModel(AccountModel.class, req);

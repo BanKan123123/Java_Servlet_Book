@@ -1,8 +1,5 @@
 package com.example.model;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-
 public class BookModel extends AbstractModel {
     private String title, slug, description, imageThumbnail, categories;
     private float rate;
