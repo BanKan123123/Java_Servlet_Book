@@ -7,11 +7,13 @@ import com.example.utils.HttpUtil;
 import com.example.utils.ResponseAPIUtils;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BookService implements IBookService {
@@ -50,7 +52,7 @@ public class BookService implements IBookService {
     @Override
     public BookModel update(BookModel bookModel, String slug) {
         bookDAO.updateBook(bookModel, slug);
-        return findOneBookBySlug(slug);
+        return findOneBookBySlug(bookModel.getSlug());
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -84,7 +86,7 @@ public class BookService implements IBookService {
         WrapperResponse<BookModel> wrapperResponse = new WrapperResponse<>();
         BookModel bookModel = HttpUtil.of(req.getReader()).toModel(BookModel.class);
 
-        if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getAuthorId() == 0 || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
+        if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
         } else {
             BookModel findBook = findOneBookBySlug(bookModel.getSlug());
@@ -110,7 +112,7 @@ public class BookService implements IBookService {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("update")) {
-                    if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getAuthorId() == 0 || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
+                    if (bookModel.getTitle() == null || bookModel.getTitle().isEmpty() || bookModel.getSlug() == null || bookModel.getSlug().isEmpty() || bookModel.getDescription() == null || bookModel.getDescription().isEmpty() || bookModel.getCategories() == null || bookModel.getCategories().isEmpty() || bookModel.getQuantity() == 0) {
                         responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
                     } else {
                         ArrayList<BookModel> books = new ArrayList<>();

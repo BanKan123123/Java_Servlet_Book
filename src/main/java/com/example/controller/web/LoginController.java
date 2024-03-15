@@ -18,7 +18,6 @@ public class LoginController extends HttpServlet {
     private final AccountService accountService = new AccountService();
 
     private String message;
-
     public void init() {
         message = "Username or password is invalid";
     }

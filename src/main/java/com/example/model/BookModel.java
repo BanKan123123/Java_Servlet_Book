@@ -1,25 +1,28 @@
 package com.example.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class BookModel extends AbstractModel {
     private String title, slug, description, imageThumbnail, categories;
     private float rate;
-    private int authorId, liked, quantity;
+    private AuthorModel author;
+    private int liked, quantity;
+
+//    private int authorId;
 
     public BookModel() {
 
     }
 
-    public BookModel(int id, Timestamp created_at, Timestamp updated_at, String title, String slug, String description, String imageThumbnail, String categories, float rate, int authorId, int liked, int quantity) {
-        super(id, created_at, updated_at);
+    public BookModel(String title, String slug, String description, String imageThumbnail, String categories, float rate, AuthorModel author, int liked, int quantity) {
         this.title = title;
         this.slug = slug;
         this.description = description;
         this.imageThumbnail = imageThumbnail;
         this.categories = categories;
         this.rate = rate;
-        this.authorId = authorId;
+        this.author = author;
         this.liked = liked;
         this.quantity = quantity;
     }
@@ -64,13 +67,13 @@ public class BookModel extends AbstractModel {
         this.rate = rate;
     }
 
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
+//    public int getAuthorId() {
+//        return authorId;
+//    }
+//
+//    public void setAuthorId(int authorId) {
+//        this.authorId = authorId;
+//    }
 
     public String getSlug() {
         return slug;
@@ -96,15 +99,11 @@ public class BookModel extends AbstractModel {
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
-        return "AccountModel{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", imageThumbnail='" + imageThumbnail + '\'' +
-                ", categories='" + categories + '\'' +
-                ", rate=" + rate +
-                ", authorId=" + authorId +
-                '}';
+    public AuthorModel getAuthors() {
+        return author;
+    }
+
+    public void setAuthors(AuthorModel listAuthors) {
+        this.author = listAuthors;
     }
 }

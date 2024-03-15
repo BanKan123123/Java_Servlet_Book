@@ -1,8 +1,12 @@
 package com.example.controller.web;
 
 import com.example.apihandler.GenericHandleAPI;
+import com.example.model.AuthorModel;
 import com.example.model.BookModel;
+import com.example.paramMapper.BookParamMapper;
+import com.example.service.impl.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,11 +26,13 @@ import java.nio.charset.StandardCharsets;
 public class BookController extends HttpServlet {
     private final GenericHandleAPI<BookModel> genericHandleAPI = new GenericHandleAPI<>();
     private String urlAPI;
+    private final AuthorService authorService = new AuthorService();
 
     @Override
     public void init() {
         urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books";
     }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,49 +46,28 @@ public class BookController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
+        String jsonBook = new BookParamMapper().mapperParam(req);
 
-        String title = req.getParameter("title");
-        String replaced = title.toLowerCase().replaceAll("\\s+", "-");
-        String slug = replaced.replaceAll("[^a-z0-9-]", "");
-        String description = req.getParameter("description");
-        String imageThumbnail = req.getParameter("image-thumbnail");
-        float rate = Float.parseFloat(req.getParameter("rate"));
-        int liked = Integer.parseInt(req.getParameter("liked"));
-        int authorId = Integer.parseInt(req.getParameter("author-id"));
-        String categories = req.getParameter("categories");
-        int quantity = Integer.parseInt("quantity");
-
-        JsonObject object = new JsonObject();
-        object.addProperty("title", title);
-        object.addProperty("slug", slug);
-        object.addProperty("description", description);
-        object.addProperty("imageThumbnail", imageThumbnail);
-        object.addProperty("rate", rate);
-        object.addProperty("liked", liked);
-        object.addProperty("authorId", authorId);
-        object.addProperty("categories", categories);
-        object.addProperty("quantity", quantity);
-
-        URL url = new URL(urlAPI);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-type", "application/json");
-        connection.setDoOutput(true);
-
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = object.toString().getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
+        if (req.getParameter("_method").equals("PUT")) {
+            doPut(req, resp);
+        } else if (req.getParameter("_method").equals("DELETE")) {
+            doDelete(req, resp);
+        } else {
+            genericHandleAPI.postAPIHandle(urlAPI, jsonBook, resp, mapper);
         }
+    }
 
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-            StringBuilder responseBuilder = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                responseBuilder.append(responseLine.trim());
-            }
-            mapper.writeValue(resp.getOutputStream(), responseBuilder);
-        }
-        connection.disconnect();
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String pathInfo = req.getPathInfo();
+        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + pathInfo;
+        String jsonBook = new BookParamMapper().mapperParam(req);
+        genericHandleAPI.postAPIHandle(apiUrl, jsonBook, resp, mapper);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
     }
 }

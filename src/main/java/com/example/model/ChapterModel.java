@@ -1,9 +1,12 @@
 package com.example.model;
 
 import java.sql.Timestamp;
+
 public class ChapterModel extends AbstractModel {
 
-    private int bookId, chapterIndex;
+    private BookModel book;
+    //    private int bookId;
+    private int chapterIndex;
 
     private String title, slug, data, audioUrl;
 
@@ -11,9 +14,9 @@ public class ChapterModel extends AbstractModel {
     public ChapterModel() {
     }
 
-    public ChapterModel(int id, Timestamp created_at, Timestamp updated_at, int bookId, int chapterIndex, String title, String slug, String data, String audioUrl) {
+    public ChapterModel(int id, Timestamp created_at, Timestamp updated_at, BookModel book, int chapterIndex, String title, String slug, String data, String audioUrl) {
         super(id, created_at, updated_at);
-        this.bookId = bookId;
+        this.book = book;
         this.chapterIndex = chapterIndex;
         this.title = title;
         this.slug = slug;
@@ -21,13 +24,23 @@ public class ChapterModel extends AbstractModel {
         this.audioUrl = audioUrl;
     }
 
-    public int getBookId() {
-        return bookId;
+    public ChapterModel(int id, Timestamp created_at, Timestamp updated_at, int bookId, int chapterIndex, String title, String slug, String data, String audioUrl) {
+        super(id, created_at, updated_at);
+//        this.bookId = bookId;
+        this.chapterIndex = chapterIndex;
+        this.title = title;
+        this.slug = slug;
+        this.data = data;
+        this.audioUrl = audioUrl;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
+//    public int getBookId() {
+//        return bookId;
+//    }
+//
+//    public void setBookId(int bookId) {
+//        this.bookId = bookId;
+//    }
 
     public int getChapterIndex() {
         return chapterIndex;
@@ -67,5 +80,13 @@ public class ChapterModel extends AbstractModel {
 
     public void setAudioUrl(String audioUrl) {
         this.audioUrl = audioUrl;
+    }
+
+    public BookModel getBook() {
+        return book;
+    }
+
+    public void setBook(BookModel book) {
+        this.book = book;
     }
 }

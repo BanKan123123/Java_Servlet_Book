@@ -78,7 +78,7 @@ public class ChapterService implements IChapterService {
         WrapperResponse<ChapterModel> wrapperResponse = new WrapperResponse<>();
         ChapterModel chapterModel = HttpUtil.of(req.getReader()).toModel(ChapterModel.class);
 
-        if (chapterModel.getTitle() == null || chapterModel.getTitle().isEmpty() || chapterModel.getSlug() == null || chapterModel.getSlug().isEmpty() || chapterModel.getData() == null || chapterModel.getData().isEmpty() || chapterModel.getBookId() == 0 || chapterModel.getChapterIndex() == 0) {
+        if (chapterModel.getTitle() == null || chapterModel.getTitle().isEmpty() || chapterModel.getSlug() == null || chapterModel.getSlug().isEmpty() || chapterModel.getData() == null || chapterModel.getData().isEmpty() || chapterModel.getChapterIndex() == 0) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
         } else {
             ChapterModel findChapter = findOneChapterBySlug(chapterModel.getSlug());
@@ -105,7 +105,7 @@ public class ChapterService implements IChapterService {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("update")) {
-                    if (chapterModel.getTitle() == null || chapterModel.getTitle().isEmpty() || chapterModel.getSlug() == null || chapterModel.getSlug().isEmpty() || chapterModel.getData() == null || chapterModel.getData().isEmpty() || chapterModel.getBookId() == 0 || chapterModel.getChapterIndex() == 0) {
+                    if (chapterModel.getTitle() == null || chapterModel.getTitle().isEmpty() || chapterModel.getSlug() == null || chapterModel.getSlug().isEmpty() || chapterModel.getData() == null || chapterModel.getData().isEmpty() || chapterModel.getChapterIndex() == 0) {
                         responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
                     } else {
                         ArrayList<ChapterModel> chapters = new ArrayList<>();

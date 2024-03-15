@@ -63,6 +63,7 @@ public class RegisterController extends HttpServlet {
             }
             if (responseBuilder != null) {
                 resp.sendRedirect(req.getContextPath() + "/login?action=login");
+                ObjectMapper mapper = new ObjectMapper();
             }
         }
         connection.disconnect();

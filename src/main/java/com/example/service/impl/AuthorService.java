@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorChapter implements IAuthorService {
+public class AuthorService implements IAuthorService {
     private final AuthorDAO authorDAO = new AuthorDAO();
     private final ResponseAPIUtils<AuthorModel> responseAPIUtils = new ResponseAPIUtils<>();
 
@@ -42,7 +42,7 @@ public class AuthorChapter implements IAuthorService {
     @Override
     public AuthorModel update(AuthorModel authorModel, String slug) {
         authorDAO.updateAuthor(authorModel, slug);
-        return findOneAuthorBySlug(slug); // Thay doi slug thi khong the tim thay.
+        return findOneAuthorBySlug(slug);
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -70,8 +70,8 @@ public class AuthorChapter implements IAuthorService {
 
     public void insertData(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        req.setCharacterEncoding("UTF-8"); // Để khi mà thằng client nó có chuỗi tiếng việt
-        resp.setContentType("application/json"); // Trả kết quả cho thằng client, và cụ thể là trả về json, thì thằng server định nghĩa một header để thằng Client hiểu.
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
         WrapperResponse<AuthorModel> wrapperResponse = new WrapperResponse<>();
         AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class);
 

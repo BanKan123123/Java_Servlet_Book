@@ -1,6 +1,5 @@
 <%@include file="/views/common/taglib.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 
 <head>
@@ -67,6 +66,13 @@
                                     ${message}
                             </div>
                         </c:if>
+
+                        <c:if test="${not empty sessionScope.messageSuccess}">
+                            <div class="alert alert-${sessionScope.alert}">
+                                    ${sessionScope.messageSuccess}
+                            </div>
+                        </c:if>
+
                         <div class="form-group">
                             <input type="text" placeholder="Email hoặc số điện thoại" name="username"
                                    id="username" class="form-control" required>
@@ -76,7 +82,8 @@
                                    class="form-control" required>
                         </div>
                         <div class="form-group form-custom">
-                            <span>Chưa có tài khoản ?</span> <a href="register" class="text-info">Đăng ký </a>
+                            <span>Chưa có tài khoản ?</span> <a href="register-test?action=register" class="text-info">Đăng
+                            ký </a>
                         </div>
                         <div id="register-link">
                             <input type="submit" name="submit" class="btn btn-info btn-md btn-custom"

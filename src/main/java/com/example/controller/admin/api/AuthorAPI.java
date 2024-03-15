@@ -1,6 +1,6 @@
 package com.example.controller.admin.api;
 
-import com.example.service.impl.AuthorChapter;
+import com.example.service.impl.AuthorService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/api-admin-author/*"})
 public class AuthorAPI extends HttpServlet {
 
-    private final AuthorChapter authorService = new AuthorChapter();
+    private final AuthorService authorService = new AuthorService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
