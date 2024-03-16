@@ -20,7 +20,7 @@ public class BookParamMapper {
         int liked = Integer.parseInt(req.getParameter("liked"));
         String slugAuthor = req.getParameter("author-slug");
         AuthorModel authors = authorService.findOneAuthorBySlug(slugAuthor);
-        String categories = req.getParameter("categories");
+//        String categories = req.getParameter("categories");
         int quantity = Integer.parseInt(req.getParameter("quantity"));
 
         BookModel bookModel = new BookModel(title, slug, description, imageThumbnail, rate, authors, liked, quantity);

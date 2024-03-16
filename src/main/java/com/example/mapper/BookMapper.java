@@ -62,8 +62,4 @@ public class BookMapper implements RowMapper<BookModel> {
             return null;
         }
     }
-
-    public void setCategoryMapping(ResultSet resultSet) {
-
-    }
 }

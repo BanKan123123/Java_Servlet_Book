@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class HttpUtil {
-    private String value;
+    private final String value;
     public HttpUtil(String value) {
         this.value = value;
     }
