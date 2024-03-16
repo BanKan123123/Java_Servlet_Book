@@ -40,13 +40,33 @@ public class GenericHandleAPI<T> {
         connection.disconnect();
     }
 
-    public void postAPIHandle (String urlAPI, String jsonBook, HttpServletResponse resp, ObjectMapper mapper) throws IOException {
+    public void postAPIHandle(String urlAPI, String jsonBook, HttpServletResponse resp, ObjectMapper mapper) throws IOException {
         URL url = new URL(urlAPI);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-type", "application/json");
         connection.setDoOutput(true);
 
+        handleConnection((HttpURLConnection) url.openConnection(), jsonBook, resp, mapper, 201);
+    }
+
+    public void putAPIHandel(String urlAPI, String jsonBook, HttpServletResponse resp, ObjectMapper mapper) throws IOException {
+        URL url = new URL(urlAPI);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Content-Type", "application/json");
+        handleConnection(connection, jsonBook, resp, mapper, 200);
+    }
+
+    public void deleteAPIHandel(String urlAPI, HttpServletResponse resp, ObjectMapper mapper) throws IOException {
+        URL url = new URL(urlAPI);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("DELETE");
+
+        handleResponseAPI(connection, resp, mapper, 200);
+    }
+
+    public void handleConnection(HttpURLConnection connection, String jsonBook, HttpServletResponse resp, ObjectMapper mapper, int status) throws IOException {
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonBook.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
@@ -54,11 +74,14 @@ public class GenericHandleAPI<T> {
         } catch (IOException e) {
             // Xử lý exception khi gửi yêu cầu
             mapper.writeValue(resp.getOutputStream(), "Error occurred while sending request");
-            return;
         }
 
+        handleResponseAPI(connection, resp, mapper, status);
+    }
+
+    public void handleResponseAPI(HttpURLConnection connection, HttpServletResponse resp, ObjectMapper mapper, int status) throws IOException {
         int responseCode = connection.getResponseCode();
-        if (responseCode == 201) {
+        if (responseCode == status) {
             // Đọc phản hồi từ API (nếu cần)
             try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                 String inputLine;

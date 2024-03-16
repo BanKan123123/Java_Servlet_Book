@@ -16,7 +16,7 @@ public class ResponseAPIUtils<T> {
         response.setStatus(200);
         response.setMessage("Find all success");
         response.setData(data);
-        res.setStatus(200);
+        res.setStatus(200); // created
     }
 
     public void insertSuccess(WrapperResponse<T> response, ArrayList<T> data, HttpServletResponse res) {
@@ -34,9 +34,9 @@ public class ResponseAPIUtils<T> {
     }
 
     public void deleteSuccess(WrapperResponse<T> response, HttpServletResponse res) {
-        response.setStatus(204); // No content response
+        response.setStatus(200); // No content response
         response.setMessage("Delete success");
-        res.setStatus(204);
+        res.setStatus(200);
     }
 
     public void notFoundAPI(WrapperResponse<T> response, HttpServletResponse res) {
@@ -52,7 +52,7 @@ public class ResponseAPIUtils<T> {
     }
 
     public void duplicateDataAPI(WrapperResponse<T> response, HttpServletResponse res) {
-        response.setStatus(409);
+        response.setStatus(409); //Conflict DB
         response.setMessage("Your data is duplicate in database");
         res.setStatus(409);
     }

@@ -9,12 +9,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/book/*", "/book"})
 public class BookController extends HttpServlet {
     private final GenericHandleAPI<BookModel> genericHandleAPI = new GenericHandleAPI<>();
     private String urlAPI;
+
     @Override
     public void init() {
         urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books";
@@ -29,7 +31,7 @@ public class BookController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
@@ -50,11 +52,16 @@ public class BookController extends HttpServlet {
         String pathInfo = req.getPathInfo();
         String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + pathInfo;
         String jsonBook = new BookParamMapper().mapperParam(req);
-        genericHandleAPI.postAPIHandle(apiUrl, jsonBook, resp, mapper);
+
+        genericHandleAPI.putAPIHandel(apiUrl, jsonBook, resp, mapper);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String pathInfo = req.getPathInfo();
+        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + pathInfo;
+
+        genericHandleAPI.deleteAPIHandel(apiUrl, resp, mapper);
     }
 }

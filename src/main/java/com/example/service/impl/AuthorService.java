@@ -42,12 +42,13 @@ public class AuthorService implements IAuthorService {
     @Override
     public AuthorModel update(AuthorModel authorModel, String slug) {
         authorDAO.updateAuthor(authorModel, slug);
-        return findOneAuthorBySlug(slug);
+        return findOneAuthorBySlug(authorModel.getSlug());
     }
 
+    //GET[]
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        req.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8"); //
         resp.setContentType("application/json");
         WrapperResponse<AuthorModel> wrapperResponse = new WrapperResponse<>();
 
@@ -73,7 +74,8 @@ public class AuthorService implements IAuthorService {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         WrapperResponse<AuthorModel> wrapperResponse = new WrapperResponse<>();
-        AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class);
+
+        AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class); // BufferReader
 
         if (authorModel.getName().isEmpty() || authorModel.getName() == null || authorModel.getSlug() == null || authorModel.getSlug().isEmpty()) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
@@ -95,8 +97,10 @@ public class AuthorService implements IAuthorService {
         ObjectMapper mapper = new ObjectMapper();
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
+
         WrapperResponse<AuthorModel> wrapperResponse = new WrapperResponse<>();
         AuthorModel authorModel = HttpUtil.of(req.getReader()).toModel(AuthorModel.class);
+
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
@@ -106,7 +110,7 @@ public class AuthorService implements IAuthorService {
                     } else {
                         ArrayList<AuthorModel> authors = new ArrayList<>();
                         String slug = path[2];
-                        if (findOneAuthorBySlug(slug) != null) {
+                        if (findOneAuthorBySlug(authorModel.getSlug()) == null) {
                             AuthorModel authorModel1 = update(authorModel, slug);
                             authors.add(authorModel1);
                             responseAPIUtils.updateSuccess(wrapperResponse, authors, resp);

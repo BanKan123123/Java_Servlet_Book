@@ -113,14 +113,12 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setParameter(statement, parameters);
-            statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
-
+            statement.executeUpdate(); // INSERT UPDATE, DELETE
+            resultSet = statement.getGeneratedKeys(); //4
             if (resultSet.next()) {
                 id = resultSet.getLong(1);
             }
-            connection.commit();
-
+            connection.commit(); // confirm viec
             return id;
         } catch (Exception e) {
             if (connection != null) {

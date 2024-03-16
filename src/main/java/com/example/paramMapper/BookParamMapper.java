@@ -23,7 +23,7 @@ public class BookParamMapper {
         String categories = req.getParameter("categories");
         int quantity = Integer.parseInt(req.getParameter("quantity"));
 
-        BookModel bookModel = new BookModel(title, slug, description, imageThumbnail, categories, rate, authors, liked, quantity);
+        BookModel bookModel = new BookModel(title, slug, description, imageThumbnail, rate, authors, liked, quantity);
         return mapper.writeValueAsString(bookModel);
     }
 

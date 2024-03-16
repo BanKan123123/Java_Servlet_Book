@@ -38,17 +38,23 @@ public class BookService implements IBookService {
 
     @Override
     public BookModel save(BookModel bookModel) {
-        bookDAO.addBook(bookModel);
+        Long idBook = bookDAO.addBook(bookModel);
+        bookDAO.addCategoriesOnBook(bookModel.getCategories(), idBook);
         return findOneBookBySlug(bookModel.getSlug());
     }
 
     @Override
     public void delete(String slug) {
+        BookModel bookModel = findOneBookBySlug(slug);
+        bookDAO.deleteCategoriesOnBook(bookModel);
         bookDAO.deleteBook(slug);
     }
 
     @Override
     public BookModel update(BookModel bookModel, String slug) {
+        BookModel bookModel1 = findOneBookBySlug(slug);
+        bookDAO.deleteCategoriesOnBook(bookModel1);
+        bookDAO.addCategoriesOnBook(bookModel.getCategories(), bookModel1.getId());
         bookDAO.updateBook(bookModel, slug);
         return findOneBookBySlug(bookModel.getSlug());
     }

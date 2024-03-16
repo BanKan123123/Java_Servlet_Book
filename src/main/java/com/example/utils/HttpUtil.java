@@ -7,8 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class HttpUtil {
-
-    public HttpUtil() {}
     private String value;
     public HttpUtil(String value) {
         this.value = value;
@@ -19,13 +17,10 @@ public class HttpUtil {
     }
     public static HttpUtil of(BufferedReader br) throws IOException {
         StringBuilder sb = new StringBuilder();
-
         String line;
         while((line = br.readLine()) != null) {
             sb.append(line);
         }
         return new HttpUtil(sb.toString());
     }
-
-
 }

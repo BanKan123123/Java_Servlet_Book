@@ -10,19 +10,22 @@ public class AuthorDAO extends AbstractDAO<AuthorModel> implements IAuthorDAO {
     @Override
     public List<AuthorModel> findAllAuthors() {
         String sql = "SELECT * FROM author ORDER BY name ASC";
-        return query(sql, new AuthorMapper());
+        return query(sql, new AuthorMapper()); //list authors
     }
 
     @Override
     public AuthorModel findAuthorBySlug(String slug) {
         String sql = "SELECT * FROM author WHERE slug = ?";
+        if (query(sql, new AuthorMapper(), slug).isEmpty()) {
+            return null;
+        }
         return query(sql, new AuthorMapper(), slug).get(0);
     }
 
     @Override
     public Long addAuthor(AuthorModel authorModel) {
         String sql = "INSERT INTO author (name, slug) VALUES (? , ?)";
-        return insert(sql, authorModel.getName(), authorModel.getSlug());
+        return insert(sql, authorModel.getName(), authorModel.getSlug()); // id generate
     }
 
     @Override

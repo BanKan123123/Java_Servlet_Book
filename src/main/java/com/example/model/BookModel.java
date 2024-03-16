@@ -1,23 +1,25 @@
 package com.example.model;
 
+import java.util.ArrayList;
+
 public class BookModel extends AbstractModel {
-    private String title, slug, description, imageThumbnail, categories;
+
+//    private String categories;
+    private String title, slug, description, imageThumbnail;
+
+    private ArrayList<CategoryModel> categories;
     private float rate;
     private AuthorModel author;
     private int liked, quantity;
 
-//    private int authorId;
-
     public BookModel() {
-
     }
 
-    public BookModel(String title, String slug, String description, String imageThumbnail, String categories, float rate, AuthorModel author, int liked, int quantity) {
+    public BookModel(String title, String slug, String description, String imageThumbnail, float rate, AuthorModel author, int liked, int quantity) {
         this.title = title;
         this.slug = slug;
         this.description = description;
         this.imageThumbnail = imageThumbnail;
-        this.categories = categories;
         this.rate = rate;
         this.author = author;
         this.liked = liked;
@@ -48,13 +50,13 @@ public class BookModel extends AbstractModel {
         this.imageThumbnail = imageThumbnail;
     }
 
-    public String getCategories() {
-        return categories;
-    }
+//    public String getCategories() {
+//        return categories;
+//    }
 
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
+//    public void setCategories(String categories) {
+//        this.categories = categories;
+//    }
 
     public float getRate() {
         return rate;
@@ -63,14 +65,6 @@ public class BookModel extends AbstractModel {
     public void setRate(float rate) {
         this.rate = rate;
     }
-
-//    public int getAuthorId() {
-//        return authorId;
-//    }
-//
-//    public void setAuthorId(int authorId) {
-//        this.authorId = authorId;
-//    }
 
     public String getSlug() {
         return slug;
@@ -102,5 +96,13 @@ public class BookModel extends AbstractModel {
 
     public void setAuthors(AuthorModel listAuthors) {
         this.author = listAuthors;
+    }
+
+    public ArrayList<CategoryModel> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<CategoryModel> categories) {
+        this.categories = categories;
     }
 }
