@@ -18,8 +18,6 @@
     <%--    <script src="${contextPath}/views/assets/js/bootstrap.min.js"></script>--%>
     <%--    <script src="${contextPath}/views/assets/js/bootstrap-multiselect.js"></script>--%>
     <%--    <script src="${contextPath}/views/assets/js/main.js"></script>--%>
-    <link rel="stylesheet" href="${contextPath}/resources/semantic-ui/semantic.min.css">
-    <script src="${contextPath}/resources/semantic-ui/semantic.min.js"></script>
 </head>
 <body>
 <div class="book_list">

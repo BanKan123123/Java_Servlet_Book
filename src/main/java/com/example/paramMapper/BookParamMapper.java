@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 public class BookParamMapper implements IMapperParam{
     private final AuthorService authorService = new AuthorService();
     private final CategoryService categoryService = new CategoryService();

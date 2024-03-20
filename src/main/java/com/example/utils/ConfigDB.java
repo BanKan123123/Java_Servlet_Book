@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConfigDB {
     public static Connection provideConnection() throws ClassNotFoundException {
-        Connection conn = null;
+        Connection conn;
         Class.forName("com.mysql.jdbc.Driver");
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mana_book?autoReconnect=true&useSSL=false", "root", "password");
