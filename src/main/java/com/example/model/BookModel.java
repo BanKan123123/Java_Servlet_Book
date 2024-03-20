@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class BookModel extends AbstractModel {
@@ -13,6 +14,30 @@ public class BookModel extends AbstractModel {
     private int liked, quantity;
 
     public BookModel() {
+    }
+
+    public BookModel(String title, String slug, String description, String imageThumbnail, ArrayList<CategoryModel> categories, float rate, AuthorModel author, int liked, int quantity) {
+        this.title = title;
+        this.slug = slug;
+        this.description = description;
+        this.imageThumbnail = imageThumbnail;
+        this.categories = categories;
+        this.rate = rate;
+        this.author = author;
+        this.liked = liked;
+        this.quantity = quantity;
+    }
+
+    public BookModel(int id, Timestamp created_at, Timestamp updated_at, String title, String slug, String description, String imageThumbnail, float rate, AuthorModel author, int liked, int quantity) {
+        super(id, created_at, updated_at);
+        this.title = title;
+        this.slug = slug;
+        this.description = description;
+        this.imageThumbnail = imageThumbnail;
+        this.rate = rate;
+        this.author = author;
+        this.liked = liked;
+        this.quantity = quantity;
     }
 
     public BookModel(String title, String slug, String description, String imageThumbnail, float rate, AuthorModel author, int liked, int quantity) {

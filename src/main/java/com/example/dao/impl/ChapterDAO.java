@@ -17,10 +17,10 @@ public class ChapterDAO extends AbstractDAO<ChapterModel> implements IChapterDAO
     public ChapterModel findOneChapter(String slug) {
         String sql = "SELECT * FROM books, author, chapter WHERE books.authorId = author.id AND books.id = chapter.bookId AND chapter.slug = ? ORDER BY books.title ASC ";
         if (query(sql, new ChapterMapper(), slug).isEmpty()) {
-            return null;
-        }
-        return query(sql, new ChapterMapper(), slug).get(0);
+        return null;
     }
+        return query(sql, new ChapterMapper(), slug).get(0);
+}
 
     @Override
     public Long addChapter(ChapterModel chapterModel) {

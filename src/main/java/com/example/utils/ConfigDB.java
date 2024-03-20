@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConfigDB {
-
     public static Connection provideConnection() throws ClassNotFoundException {
         Connection conn = null;
         Class.forName("com.mysql.jdbc.Driver");

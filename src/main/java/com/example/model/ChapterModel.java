@@ -12,6 +12,15 @@ public class ChapterModel extends AbstractModel {
     public ChapterModel() {
     }
 
+    public ChapterModel(BookModel book, int chapterIndex, String title, String slug, String data, String audioUrl) {
+        this.book = book;
+        this.chapterIndex = chapterIndex;
+        this.title = title;
+        this.slug = slug;
+        this.data = data;
+        this.audioUrl = audioUrl;
+    }
+
     public int getChapterIndex() {
         return chapterIndex;
     }

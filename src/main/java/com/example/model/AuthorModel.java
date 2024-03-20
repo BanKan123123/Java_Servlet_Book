@@ -8,6 +8,11 @@ public class AuthorModel extends AbstractModel{
 
     public AuthorModel() {}
 
+    public AuthorModel(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
+
     public AuthorModel(int id, Timestamp created_at, Timestamp updated_at, String name, String slug) {
         super(id, created_at, updated_at);
         this.name = name;

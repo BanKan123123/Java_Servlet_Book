@@ -1,0 +1,20 @@
+.book_list {
+  display: flex;
+
+  .main-book {
+    float: right;
+    padding: 25px 10px;
+    img {
+      width: 70px;
+      height: 70px;
+    }
+
+    .main-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+
