@@ -1,10 +1,12 @@
 package com.example.controller.web;
 
 import com.example.apihandler.GenericHandleAPI;
+import com.example.mapper.BookMapper;
 import com.example.model.AuthorModel;
 import com.example.model.BookModel;
 import com.example.model.CategoryModel;
 import com.example.paramMapper.BookParamMapper;
+import com.example.paramMapper.CategoryParamMapper;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -52,22 +54,28 @@ public class BookController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        String jsonBook = new BookParamMapper().mapperParam(req);
-        String method = req.getParameter("_method");
-        if (method.equals("PUT")) {
-            doPut(req, resp);
-        } else if (method.equals("DELETE")) {
-            doDelete(req, resp);
+        if (req.getParameter("action") != null) {
+            String action = req.getParameter("action");
+            if (action.equals("update")) {
+                doPut(req, resp);
+                resp.sendRedirect(req.getContextPath() + "/book");
+            } else if (action.equals("delete")) {
+                doDelete(req, resp);
+                resp.sendRedirect(req.getContextPath() + "/book");
+            }
         } else {
-            genericHandleAPI.postAPIHandle(urlAPIBook, jsonBook, resp, mapper);
+            String jsonBook = new BookParamMapper().mapperParam(req);
+            genericHandleAPI.postAPIHandle(urlAPICategory, jsonBook, resp, mapper);
+            resp.sendRedirect(req.getContextPath() + "/book");
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String pathInfo = req.getPathInfo();
-        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + pathInfo;
+        String action = req.getParameter("action");
+        String slug = req.getParameter("slug");
+        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + action + "/" + slug;
         String jsonBook = new BookParamMapper().mapperParam(req);
 
         genericHandleAPI.putAPIHandel(apiUrl, jsonBook, resp, mapper);
@@ -76,8 +84,9 @@ public class BookController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String pathInfo = req.getPathInfo();
-        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + pathInfo;
+        String action = req.getParameter("action");
+        String slug = req.getParameter("slug");
+        String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books/" + action + "/" + slug;
 
         genericHandleAPI.deleteAPIHandel(apiUrl, resp, mapper);
     }

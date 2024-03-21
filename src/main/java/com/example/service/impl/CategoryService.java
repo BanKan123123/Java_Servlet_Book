@@ -48,15 +48,8 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryModel update(CategoryModel categoryModel, String slug) {
-        if (findOneCategoryBySlug(slug) != null) {
-            if (categoryModel.getName().isEmpty() || categoryModel.getSlug().isEmpty()) {
-                return null;
-            } else {
-                categoryDAO.updateCategory(categoryModel, slug);
-                return categoryModel;
-            }
-        }
-        return null;
+        categoryDAO.updateCategory(categoryModel, slug);
+        return findOneCategoryBySlug(categoryModel.getSlug());
     }
 
     public void findData(String pathInfo, HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -91,7 +84,7 @@ public class CategoryService implements ICategoryService {
 
         CategoryModel categoryModel = HttpUtil.of(req.getReader()).toModel(CategoryModel.class);
 
-        if (categoryModel.getName() == null || categoryModel.getName().isEmpty() || categoryModel.getSlug() == null || categoryModel.getSlug().isEmpty()) {
+        if (categoryModel.getName() == null || categoryModel.getName().isEmpty()) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
         } else {
             CategoryModel findCategory = findOneCategoryBySlug(categoryModel.getSlug());
@@ -117,7 +110,7 @@ public class CategoryService implements ICategoryService {
             String[] path = pathInfo.split("/");
             if (path.length == 3) {
                 if (path[1].equals("update") && !path[2].isEmpty()) {
-                    if (categoryModel.getName() == null || categoryModel.getName().isEmpty() || categoryModel.getSlug() == null || categoryModel.getSlug().isEmpty()) {
+                    if (categoryModel.getName() == null || categoryModel.getName().isEmpty()) {
                         responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
                     } else {
                         ArrayList<CategoryModel> categoryModels = new ArrayList<>();

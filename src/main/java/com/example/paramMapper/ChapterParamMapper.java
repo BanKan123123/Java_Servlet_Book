@@ -21,8 +21,9 @@ public class ChapterParamMapper implements IMapperParam {
         BookModel bookModel = bookService.findOneBookBySlug(slugBook);
         int chapterIndex = Integer.parseInt(req.getParameter("chapter-index"));
         String audioUrl = req.getParameter("audio-url");
+        String summary = req.getParameter("summary");
 
-        ChapterModel chapterModel = new ChapterModel(bookModel, chapterIndex, title, slug, data, audioUrl);
+        ChapterModel chapterModel = new ChapterModel(bookModel, chapterIndex, title, slug, data, audioUrl, summary);
         return mapper.writeValueAsString(chapterModel);
     }
 }

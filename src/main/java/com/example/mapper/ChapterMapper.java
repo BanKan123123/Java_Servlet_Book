@@ -44,6 +44,7 @@ public class ChapterMapper implements RowMapper<ChapterModel> {
             chapterModel.setAudioUrl(resultSet.getString(23));
             chapterModel.setCreated_at(resultSet.getTimestamp(24));
             chapterModel.setUpdated_at(resultSet.getTimestamp(25));
+            chapterModel.setSummary(resultSet.getString(26));
 
             return chapterModel;
         } catch (SQLException e) {

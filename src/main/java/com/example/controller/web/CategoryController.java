@@ -28,15 +28,6 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String path = "/views/admin/category.jsp";
-
-        if (req.getParameter("slug") != null) {
-            String slug = req.getParameter("slug");
-            WrapperResponse<CategoryModel> responseCategoryBySlug = genericHandleAPIAuthor.getMultipleAPIHandle(urlAPICategory, slug);
-            req.setAttribute("responseCategoryBySlug", responseCategoryBySlug.getData());
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(resp.getOutputStream(), responseCategoryBySlug);
-        }
-
         WrapperResponse<CategoryModel> responseCategory = genericHandleAPIAuthor.getMultipleAPIHandle(urlAPICategory, pathInfo);
         req.setAttribute("responseCategory", responseCategory.getData());
         req.getRequestDispatcher(path).forward(req, resp);
@@ -51,6 +42,7 @@ public class CategoryController extends HttpServlet {
             String action = req.getParameter("action");
             if (action.equals("update")) {
                 doPut(req, resp);
+                resp.sendRedirect(req.getContextPath() + "/categories");
             } else if (action.equals("delete")) {
                 doDelete(req, resp);
                 resp.sendRedirect(req.getContextPath() + "/categories");
@@ -68,7 +60,7 @@ public class CategoryController extends HttpServlet {
         String action = req.getParameter("action");
         String slug = req.getParameter("slug");
         String apiUrl = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-category/" + action + "/" + slug;
-        String jsonBook = new BookParamMapper().mapperParam(req);
+        String jsonBook = new CategoryParamMapper().mapperParam(req);
         genericHandleAPIAuthor.putAPIHandel(apiUrl, jsonBook, resp, mapper);
     }
 

@@ -83,7 +83,8 @@ public class GenericHandleAPI<T> {
         URL url = new URL(urlAPI);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("PUT");
-        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Content-type", "application/json");
+        connection.setDoOutput(true);
 
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonResponse.getBytes(StandardCharsets.UTF_8);

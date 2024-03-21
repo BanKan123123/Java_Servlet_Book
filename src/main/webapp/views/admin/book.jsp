@@ -105,6 +105,7 @@
                         <th scope="col">Rate</th>
                         <th scope="col">Liked</th>
                         <th scope="col">Quantity</th>
+                        <th colspan="2"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -123,6 +124,121 @@
                         <td><span> ${book.rate} </span></td>
                         <td><span> ${book.liked} </span></td>
                         <td><span> ${book.quantity} </span></td>
+                        <td>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#edit-book-${book.slug}"
+                                    class="btn btn-info">Edit
+                            </button>
+
+                            <div class="modal fade" id="edit-book-${book.slug}" tabindex="-1"
+                                 aria-labelledby="add-book-modal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <form class="modal-content" method="POST"
+                                          action="book?action=update&slug=${book.slug}">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="edit-book-modal">Edit
+                                                category ${book.title}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="titleEdit" class="form-label">Title</label>
+                                                <input value="${book.title}" name="title" type="text"
+                                                       class="form-control" id="titleEdit"
+                                                       placeholder="Title...">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="descriptionEdit" class="form-label">Description</label>
+                                                <input value="${book.description}" name="description" type="text"
+                                                       class="form-control"
+                                                       id="descriptionEdit">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="authorEdit" class="form-label">Author</label>
+                                                <select name="author" id="authorEdit" data-placeholder="Choose author"
+                                                        class="form-select"
+                                                        aria-label="Default select example">
+                                                    <c:forEach var="author" items="${responseAuthor}">
+                                                        <option ${book.authors.name == author.name ? 'selected' : ''}
+                                                                value="${author.slug}">${author.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="select-categories-edit"
+                                                       class="form-label">Categories</label>
+                                                <select name="category" id="select-categories-edit" multiple>
+                                                    <c:forEach var="category" items="${responseCategory}">--%>
+                                                        <option ${book.categories.contains(category) ? 'selected' : ''}
+                                                                value="${category.slug}">${category.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="quantity-edit" class="form-label">Quantity</label>
+                                                <input value="${book.quantity}" name="quantity" type="text"
+                                                       class="form-control"
+                                                       id="quantity-edit">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="rate-edit" class="form-label">Rate</label>
+                                                <input value="${book.rate}" name="rate" type="text" class="form-control"
+                                                       id="rate-edit">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="liked-edit" class="form-label">Liked</label>
+                                                <input value="${book.liked}" name="liked" type="text"
+                                                       class="form-control" id="liked-edit">
+                                            </div>
+                                            <div class="mb-3 form-check">
+                                                <input value="${book.imageThumbnail}" name="image-thumbnail" type="file"
+                                                       class="form-control"
+                                                       id="image-thumbnail-edit">
+                                                <label class="form-label" for="image-thumbnail">Image Thumbnail</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button name="_method" type="submit" class="btn btn-primary">Edit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#delete-book-${book.slug}"
+                                    class="btn btn-danger">Delete
+                            </button>
+
+                            <div class="modal fade" id="delete-book-${book.slug}" tabindex="-1"
+                                 aria-labelledby="delete-label"
+                                 aria-hidden="true">
+                                <form method="POST" action="book?action=delete&slug=${book.slug}"
+                                      class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="delete-label">Delete
+                                                category ${book.title}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure want to delete that ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                     </c:forEach>

@@ -22,7 +22,7 @@
             </button>
 
             <div class="modal fade" id="add-book" tabindex="-1" aria-labelledby="add-book-modal" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <form class="modal-content" method="POST" action="categories">
                         <div class="modal-header">
                             <h5 class="modal-title" id="add-book-modal">Add Book</h5>
@@ -62,27 +62,57 @@
                         <td><span> ${category.created_at}</span></td>
                         <td><span> ${category.updated_at} </span></td>
                         <td>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#edit-book"
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#edit-book-${category.slug}"
                                     class="btn btn-info">Edit
                             </button>
+
+                            <div class="modal fade" id="edit-book-${category.slug}" tabindex="-1"
+                                 aria-labelledby="add-book-modal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <form class="modal-content" method="POST"
+                                          action="categories?action=update&slug=${category.slug}">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="edit-book-modal">Edit
+                                                category ${category.name}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="nameEdit" class="form-label">Name</label>
+                                                <input value="${category.name}" name="name" type="text"
+                                                       class="form-control" id="nameEdit" placeholder="Name...">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button name="_method" type="submit" class="btn btn-primary">Edit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                         <td>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#delete-book"
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#delete-book-${category.slug}"
                                     class="btn btn-danger">Delete
                             </button>
 
-                            <div class="modal fade" id="delete-book" tabindex="-1" aria-labelledby="delete-label"
+                            <div class="modal fade" id="delete-book-${category.slug}" tabindex="-1"
+                                 aria-labelledby="delete-label"
                                  aria-hidden="true">
                                 <form method="POST" action="categories?action=delete&slug=${category.slug}"
                                       class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="delete-label">Modal title</h5>
+                                            <h5 class="modal-title" id="delete-label">Delete
+                                                category ${category.name}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure to delete that ?
+                                            Are you sure want to delete that ?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

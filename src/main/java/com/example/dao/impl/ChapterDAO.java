@@ -16,22 +16,22 @@ public class ChapterDAO extends AbstractDAO<ChapterModel> implements IChapterDAO
     @Override
     public ChapterModel findOneChapter(String slug) {
         String sql = "SELECT * FROM books, author, chapter WHERE books.authorId = author.id AND books.id = chapter.bookId AND chapter.slug = ? ORDER BY books.title ASC ";
-        if (query(sql, new ChapterMapper(), slug).isEmpty()) {
-        return null;
-    }
+        if (query(sql, new ChapterMapper(), slug).isEmpty() || query(sql, new ChapterMapper(), slug) == null) {
+            return null;
+        }
         return query(sql, new ChapterMapper(), slug).get(0);
-}
+    }
 
     @Override
     public Long addChapter(ChapterModel chapterModel) {
-        String sql = "INSERT INTO chapter(title, slug, data, bookId, chapterIndex, audioUrl) VALUES (? , ? , ? , ? , ? , ?)";
-        return insert(sql, chapterModel.getTitle(), chapterModel.getSlug(), chapterModel.getData(), chapterModel.getBook().getId(), chapterModel.getChapterIndex(), chapterModel.getAudioUrl());
+        String sql = "INSERT INTO chapter(title, slug, data, bookId, chapterIndex, audioUrl, summary) VALUES (? , ? , ? , ? , ? , ?, ?)";
+        return insert(sql, chapterModel.getTitle(), chapterModel.getSlug(), chapterModel.getData(), chapterModel.getBook().getId(), chapterModel.getChapterIndex(), chapterModel.getAudioUrl(), chapterModel.getSummary());
     }
 
     @Override
     public void updateChapter(ChapterModel chapterModel, String slug) {
-        String sql = "UPDATE chapter SET title = ?, slug = ?, data = ?, bookId = ?, chapterIndex = ?, audioUrl = ? WHERE slug = ?";
-        update(sql, chapterModel.getTitle(), chapterModel.getSlug(), chapterModel.getData(), chapterModel.getBook().getId(), chapterModel.getChapterIndex(), chapterModel.getAudioUrl(), slug);
+        String sql = "UPDATE chapter SET title = ?, slug = ?, data = ?, bookId = ?, chapterIndex = ?, audioUrl = ?, summary = ? WHERE slug = ?";
+        update(sql, chapterModel.getTitle(), chapterModel.getSlug(), chapterModel.getData(), chapterModel.getBook().getId(), chapterModel.getChapterIndex(), chapterModel.getAudioUrl(), chapterModel.getSummary(), slug);
     }
 
     @Override

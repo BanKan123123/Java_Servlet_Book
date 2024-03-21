@@ -6,19 +6,20 @@ public class ChapterModel extends AbstractModel {
     //    private int bookId;
     private int chapterIndex;
 
-    private String title, slug, data, audioUrl;
+    private String title, slug, data, audioUrl, summary;
 
 
     public ChapterModel() {
     }
 
-    public ChapterModel(BookModel book, int chapterIndex, String title, String slug, String data, String audioUrl) {
+    public ChapterModel(BookModel book, int chapterIndex, String title, String slug, String data, String audioUrl, String summary) {
         this.book = book;
         this.chapterIndex = chapterIndex;
         this.title = title;
         this.slug = slug;
         this.data = data;
         this.audioUrl = audioUrl;
+        this.summary = summary;
     }
 
     public int getChapterIndex() {
@@ -67,5 +68,13 @@ public class ChapterModel extends AbstractModel {
 
     public void setBook(BookModel book) {
         this.book = book;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }
