@@ -1,12 +1,10 @@
 package com.example.controller.web;
 
 import com.example.apihandler.GenericHandleAPI;
-import com.example.mapper.BookMapper;
 import com.example.model.AuthorModel;
 import com.example.model.BookModel;
 import com.example.model.CategoryModel;
 import com.example.paramMapper.BookParamMapper;
-import com.example.paramMapper.CategoryParamMapper;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

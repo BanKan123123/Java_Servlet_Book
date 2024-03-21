@@ -2,12 +2,9 @@ package com.example.controller.web;
 
 import com.example.apihandler.GenericHandleAPI;
 import com.example.model.AuthorModel;
-import com.example.model.CategoryModel;
 import com.example.paramMapper.AuthorParamMapper;
-import com.example.paramMapper.CategoryParamMapper;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

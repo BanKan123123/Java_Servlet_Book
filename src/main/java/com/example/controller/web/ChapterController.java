@@ -3,11 +3,9 @@ package com.example.controller.web;
 import com.example.apihandler.GenericHandleAPI;
 import com.example.model.BookModel;
 import com.example.model.ChapterModel;
-import com.example.paramMapper.AuthorParamMapper;
 import com.example.paramMapper.ChapterParamMapper;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,7 +25,7 @@ public class ChapterController extends HttpServlet {
 
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         urlAPIChapter = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-chapters";
         urlAPIBook = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-books";
     }
