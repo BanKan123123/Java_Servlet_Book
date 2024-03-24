@@ -4,11 +4,13 @@ import com.example.model.AccountModel;
 
 import java.util.List;
 
-public interface IAccount {
+public interface IAccountDAO {
 
     List<AccountModel> findAllAccount();
 
     AccountModel findOneAccount(String username);
+
+    List<AccountModel> findAllUserAccount ();
 
     AccountModel findOneById(String id);
 

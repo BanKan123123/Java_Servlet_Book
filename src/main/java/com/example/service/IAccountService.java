@@ -6,9 +6,14 @@ import java.util.List;
 
 public interface IAccountService {
 
-    List<AccountModel> findAllAccount ();
-    AccountModel findOneAccount (String username);
-    AccountModel login (String username, String password);
-    AccountModel save (AccountModel accountModel);
+    List<AccountModel> findAllAccount();
+
+    AccountModel findOneAccount(String username);
+
+    List<AccountModel> findAllUserAccount();
+
+    AccountModel login(String username, String password);
+
+    AccountModel save(AccountModel accountModel);
 
 }

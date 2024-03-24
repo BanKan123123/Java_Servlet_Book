@@ -30,6 +30,11 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public List<AccountModel> findAllUserAccount() {
+        return accountDAO.findAllUserAccount();
+    }
+
+    @Override
     public AccountModel login(String username, String password) {
         return accountDAO.signInAccount(username, password);
     }
@@ -51,15 +56,22 @@ public class AccountService implements IAccountService {
             ArrayList<AccountModel> listAccount = (ArrayList<AccountModel>) findAllAccount();
             responseAPIUtils.getDataSuccess(wrapperResponse, listAccount, resp);
         } else {
-            String username = pathInfo.substring(1);
-            AccountModel accountModel = findOneAccount(username);
-            if (accountModel != null) {
-                ArrayList<AccountModel> accounts = new ArrayList<>();
-                accounts.add(accountModel);
-                responseAPIUtils.getDataSuccess(wrapperResponse, accounts, resp);
+            String pathUser = pathInfo.substring(1);
+
+            if (pathUser.equals("get-users")) {
+                ArrayList<AccountModel> listAccount = (ArrayList<AccountModel>) findAllUserAccount();
+                responseAPIUtils.getDataSuccess(wrapperResponse, listAccount, resp);
             } else {
-                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                AccountModel accountModel = findOneAccount(pathUser);
+                if (accountModel != null) {
+                    ArrayList<AccountModel> accounts = new ArrayList<>();
+                    accounts.add(accountModel);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, accounts, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             }
+
         }
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }
