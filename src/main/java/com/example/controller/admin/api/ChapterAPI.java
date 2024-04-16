@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/api-admin-chapters/*"})
-public class ChapterApi extends HttpServlet {
+public class ChapterAPI extends HttpServlet {
 
     private final ChapterService chapterService = new ChapterService();
 

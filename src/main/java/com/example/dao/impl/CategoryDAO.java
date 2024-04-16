@@ -23,6 +23,12 @@ public class CategoryDAO extends AbstractDAO<CategoryModel> implements ICategory
     }
 
     @Override
+    public List<CategoryModel> findCategoriesByQuery(String query) {
+        String sql = "SELECT * FROM category WHERE name LIKE '" + query + "%' ORDER BY name ASC";
+        return query(sql, new CategoryMapper());
+    }
+
+    @Override
     public Long addCategory(CategoryModel categoryModel) {
         String sql = "INSERT INTO category (name, slug) VALUES (? , ?)";
         if (categoryModel.getName().isEmpty() || categoryModel.getSlug().isEmpty()) {

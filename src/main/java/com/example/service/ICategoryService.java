@@ -10,7 +10,7 @@ public interface ICategoryService {
     CategoryModel findOneCategoryBySlug(String slug);
 
     List<CategoryModel> findAllCategories();
-
+    List<CategoryModel> findCategoriesByQuery(String query);
     CategoryModel save(CategoryModel categoryModel);
 
     void delete(String slug);

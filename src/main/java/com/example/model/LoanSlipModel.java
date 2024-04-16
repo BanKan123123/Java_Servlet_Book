@@ -1,10 +1,20 @@
 package com.example.model;
 
-public class LoanSlipModel extends AbstractModel{
+
+public class LoanSlipModel extends AbstractModel {
     private int idAccount, idBook;
-    private String userName, numberPhone, code;
-    private BookModel bookModel;
+    private String userName;
+    private String numberPhone;
+    private String code;
+    private String title, created, updated;
+
     public LoanSlipModel() {
+    }
+
+    public LoanSlipModel(int idAccount, int idBook, String code) {
+        this.idAccount = idAccount;
+        this.idBook = idBook;
+        this.code = code;
     }
 
     public int getIdAccount() {
@@ -47,11 +57,27 @@ public class LoanSlipModel extends AbstractModel{
         this.code = code;
     }
 
-    public BookModel getBookModel() {
-        return bookModel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBookModel(BookModel bookModel) {
-        this.bookModel = bookModel;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
     }
 }

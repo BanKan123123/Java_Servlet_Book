@@ -11,13 +11,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     <link href="${contextPath}/views/assets/css/css-web/book_list.scss" rel="stylesheet"/>
-    <%--    <link href="${contextPath}/views/assets/css/style.css" rel="stylesheet"/>--%>
 
-    <%--    <script src="${contextPath}/views/assets/js/jquery.min.js"></script>--%>
-    <%--    <script src="${contextPath}/views/assets/js/popper.js"></script>--%>
-    <%--    <script src="${contextPath}/views/assets/js/bootstrap.min.js"></script>--%>
-    <%--    <script src="${contextPath}/views/assets/js/bootstrap-multiselect.js"></script>--%>
-    <%--    <script src="${contextPath}/views/assets/js/main.js"></script>--%>
 </head>
 <body>
 <div class="book_list">
@@ -26,6 +20,15 @@
     <div class="main-book">
         <div class="main-title">
             <h1>API Data</h1>
+
+            <form method = "GET" action = "book">
+                <div class="mb-3">
+                    <label for="search"></label>
+                    <input name = "search" placeholder="Search..." type="text" class="form-control" id="search">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </form>
 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-book">
                 Add Book

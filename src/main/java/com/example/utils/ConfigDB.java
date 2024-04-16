@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConfigDB {
+
     public static Connection provideConnection() throws ClassNotFoundException {
         Connection conn;
         Class.forName("com.mysql.jdbc.Driver");
@@ -13,6 +14,7 @@ public class ConfigDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return conn;
     }
 }

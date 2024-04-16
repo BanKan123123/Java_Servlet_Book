@@ -11,6 +11,8 @@ public interface IBookService {
 
     BookModel findOneBookBySlug (String slug);
 
+    List<BookModel> findBookByQuery(String query);
+
     BookModel save(BookModel bookModel);
 
     void delete(String slug);

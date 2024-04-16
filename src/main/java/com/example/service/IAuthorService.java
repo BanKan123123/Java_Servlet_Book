@@ -11,6 +11,7 @@ public interface IAuthorService {
 
     List<AuthorModel> findAllAuthors();
 
+    List<AuthorModel> findAuthorsByQuery(String query);
     AuthorModel save(AuthorModel authorModel);
 
     void delete(String slug);

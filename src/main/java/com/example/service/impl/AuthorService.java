@@ -29,6 +29,11 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
+    public List<AuthorModel> findAuthorsByQuery(String query) {
+        return authorDAO.findAuthorByQuery(query);
+    }
+
+    @Override
     public AuthorModel save(AuthorModel authorModel) {
         authorDAO.addAuthor(authorModel);
         return findOneAuthorBySlug(authorModel.getSlug());
@@ -57,14 +62,26 @@ public class AuthorService implements IAuthorService {
             responseAPIUtils.getDataSuccess(wrapperResponse, listAuthors, resp);
         } else {
             String slug = pathInfo.substring(1);
-            AuthorModel authorModel = findOneAuthorBySlug(slug);
-            if (authorModel != null) {
-                ArrayList<AuthorModel> authors = new ArrayList<>();
-                authors.add(authorModel);
-                responseAPIUtils.getDataSuccess(wrapperResponse, authors, resp);
+            if (slug.equals("search")) {
+                String query = req.getParameter("query");
+                if (query != null) {
+                    ArrayList<AuthorModel> listAuthors = (ArrayList<AuthorModel>) findAuthorsByQuery(query);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, listAuthors, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
+
             } else {
-                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                AuthorModel authorModel = findOneAuthorBySlug(slug);
+                if (authorModel != null) {
+                    ArrayList<AuthorModel> authors = new ArrayList<>();
+                    authors.add(authorModel);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, authors, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             }
+
         }
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }

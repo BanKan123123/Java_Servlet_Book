@@ -37,6 +37,11 @@ public class BookService implements IBookService {
     }
 
     @Override
+    public List<BookModel> findBookByQuery(String query) {
+        return bookDAO.findBookByQuery(query);
+    }
+
+    @Override
     public BookModel save(BookModel bookModel) {
         Long idBook = bookDAO.addBook(bookModel);
         bookDAO.addCategoriesOnBook(bookModel.getCategories(), idBook);
@@ -71,14 +76,25 @@ public class BookService implements IBookService {
             responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
         } else {
             String slug = pathInfo.substring(1);
-            BookModel bookModel = findOneBookBySlug(slug);
-            if (bookModel != null) {
-                ArrayList<BookModel> books = new ArrayList<>();
-                books.add(bookModel);
-                responseAPIUtils.getDataSuccess(wrapperResponse, books, resp);
+            if (slug.equals("search")) {
+                String query = req.getParameter("query");
+                if (query != null) {
+                    ArrayList<BookModel> listBooks = (ArrayList<BookModel>) findBookByQuery(query);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             } else {
-                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                BookModel bookModel = findOneBookBySlug(slug);
+                if (bookModel != null) {
+                    ArrayList<BookModel> books = new ArrayList<>();
+                    books.add(bookModel);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, books, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             }
+
         }
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }

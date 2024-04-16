@@ -8,6 +8,7 @@ public class WrapperResponse<T> {
 
     private String message;
 
+    private int total;
     private ArrayList<T> data;
 
     public WrapperResponse() {
@@ -41,5 +42,13 @@ public class WrapperResponse<T> {
 
     public void setData(ArrayList<T> data) {
         this.data = data;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

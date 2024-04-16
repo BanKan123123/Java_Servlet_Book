@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/api-admin-loan-slip", "/api-admin-loan-slip/*"})
-public class LoanSlip extends HttpServlet {
+public class LoanSlipAPI extends HttpServlet {
 
     private final LoanSlipService loanSlipService = new LoanSlipService();
 

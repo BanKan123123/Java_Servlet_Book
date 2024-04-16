@@ -31,6 +31,11 @@ public class ChapterService implements IChapterService {
     }
 
     @Override
+    public List<ChapterModel> findChapterByQuery(String query) {
+        return chapterDAO.findChapterByQuery(query);
+    }
+
+    @Override
     public ChapterModel save(ChapterModel chapterModel) {
         chapterDAO.addChapter(chapterModel);
         return findOneChapterBySlug(chapterModel.getSlug());
@@ -59,14 +64,25 @@ public class ChapterService implements IChapterService {
             responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
         } else {
             String slug = pathInfo.substring(1);
-            ChapterModel chapterModel = findOneChapterBySlug(slug);
-            if (chapterModel != null) {
-                ArrayList<ChapterModel> chapters = new ArrayList<>();
-                chapters.add(chapterModel);
-                responseAPIUtils.getDataSuccess(wrapperResponse, chapters, resp);
+            if (slug.equals("search")) {
+                String query = req.getParameter("query");
+                if (query != null) {
+                    ArrayList<ChapterModel> listBooks = (ArrayList<ChapterModel>) findChapterByQuery(query);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             } else {
-                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                ChapterModel chapterModel = findOneChapterBySlug(slug);
+                if (chapterModel != null) {
+                    ArrayList<ChapterModel> chapters = new ArrayList<>();
+                    chapters.add(chapterModel);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, chapters, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             }
+
         }
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }

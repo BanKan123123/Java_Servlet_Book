@@ -29,6 +29,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public List<CategoryModel> findCategoriesByQuery(String query) {
+        return categoryDAO.findCategoriesByQuery(query);
+    }
+
+    @Override
     public CategoryModel save(CategoryModel categoryModel) {
         if (categoryModel.getName().isEmpty() || categoryModel.getSlug().isEmpty()) {
             return null;
@@ -64,14 +69,25 @@ public class CategoryService implements ICategoryService {
             responseAPIUtils.getDataSuccess(wrapperResponse, listCategories, resp);
         } else {
             String slug = pathInfo.substring(1);
-            CategoryModel categoryModel = findOneCategoryBySlug(slug);
-            ArrayList<CategoryModel> listCategories = new ArrayList<>();
-            listCategories.add(categoryModel);
-            if (categoryModel != null) {
-                responseAPIUtils.getDataSuccess(wrapperResponse, listCategories, resp);
+            if (slug.equals("search")) {
+                String query = req.getParameter("query");
+                if (query != null) {
+                    ArrayList<CategoryModel> listCategories = (ArrayList<CategoryModel>) findCategoriesByQuery(query);
+                    responseAPIUtils.getDataSuccess(wrapperResponse, listCategories, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             } else {
-                responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                CategoryModel categoryModel = findOneCategoryBySlug(slug);
+                ArrayList<CategoryModel> listCategories = new ArrayList<>();
+                listCategories.add(categoryModel);
+                if (categoryModel != null) {
+                    responseAPIUtils.getDataSuccess(wrapperResponse, listCategories, resp);
+                } else {
+                    responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+                }
             }
+
         }
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);
     }

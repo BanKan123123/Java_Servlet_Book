@@ -10,6 +10,8 @@ public interface IChapterDAO extends GenericDAO<ChapterModel>{
 
     ChapterModel findOneChapter(String slug);
 
+    List<ChapterModel> findChapterByQuery(String query);
+
     Long addChapter (ChapterModel chapterModel);
 
     void updateChapter (ChapterModel chapterModel, String slug);

@@ -1,0 +1,17 @@
+.loan_slip_list {
+    display: flex;
+
+    .main-loan-slip {
+        padding: 25px 10px;
+
+        .main-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+    }
+}
+
+.width {
+    width: 100%;
+}
