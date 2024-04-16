@@ -96,7 +96,7 @@
                         <th scope="col">Number phone</th>
                         <th scope="col">Title book</th>
                         <th scope="col">Created at</th>
-                        <td colspan="2"></t
+                        <td colspan="2"></td>
                     </tr>
                     </thead>
                     <tbody>

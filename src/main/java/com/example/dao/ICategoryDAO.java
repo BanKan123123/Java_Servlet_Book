@@ -1,6 +1,5 @@
 package com.example.dao;
 
-import com.example.model.AuthorModel;
 import com.example.model.CategoryModel;
 
 import java.util.List;

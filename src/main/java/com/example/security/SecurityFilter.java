@@ -1,7 +1,6 @@
 package com.example.security;
 
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 
 import java.io.IOException;

@@ -27,7 +27,7 @@ public class CORSFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         doBeforeProcessing(servletRequest, servletResponse);
         try {
             filterChain.doFilter(servletRequest, servletResponse);

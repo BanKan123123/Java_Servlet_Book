@@ -59,8 +59,7 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
     public boolean isExistBookInLoanSlip(String code, int idBook) {
         String sql = "Select * from loanSlip where code = ? and idBook = ?";
         List<LoanSlipModel> list = query(sql, new LoanSlipMapper(), code, idBook);
-        if (list.isEmpty()) return false;
-        return true;
+        return list.isEmpty();
     }
 
     @Override
