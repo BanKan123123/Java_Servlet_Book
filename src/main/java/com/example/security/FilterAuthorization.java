@@ -1,8 +1,24 @@
 package com.example.security;
 
-import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.*;
 
-public class FilterAuthorization extends HttpFilter {
+import java.io.IOException;
 
+public class FilterAuthorization implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+    }
+
+    @Override
+    public void destroy() {
+        Filter.super.destroy();
+    }
 }
 

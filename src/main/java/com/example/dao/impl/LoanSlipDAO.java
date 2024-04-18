@@ -15,18 +15,21 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
     public List<LoanSlipModel> findALl() {
         String sql = "Select loanSlip.id, code, idAccount, idBook, loanSlip.created_at, loanSlip.updated_at, title, username, phoneNumber from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id ORDER BY loanSlip.created_at DESC";
         List<LoanSlipModel> list = query(sql, new LoanSlipMapper());
-        if (list == null || list.isEmpty()) {
-            return null;
+        if (list != null && !list.isEmpty()) {
+            return list;
         }
-        return list;
+        return null;
     }
 
     @Override
     public List<LoanSlipModel> findOneByCode(String id) {
         String sql = "Select loanSlip.id, code, idAccount, idBook, loanSlip.created_at, loanSlip.updated_at, title, username, phoneNumber" +
                 " from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id " +
-                " and loanSlip.code like '%" + id + "%' ORDER BY loanSlip.created_at DESC";
-        return query(sql, new LoanSlipMapper());
+                " and loanSlip.code = ? ORDER BY loanSlip.created_at DESC";
+        if (query(sql, new LoanSlipMapper(), id) != null && !query(sql, new LoanSlipMapper(), id).isEmpty()) {
+            return query(sql, new LoanSlipMapper(), id);
+        }
+        return null;
     }
 
     @Override
@@ -35,8 +38,20 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
                 " from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id " +
                 " and loanSlip.id = ?" +
                 " ORDER BY loanSlip.created_at DESC";
-        if (query(sql, new LoanSlipMapper(), id).isEmpty()) return null;
-        return query(sql, new LoanSlipMapper(), id).get(0);
+        if (query(sql, new LoanSlipMapper(), id) != null && !query(sql, new LoanSlipMapper(), id).isEmpty())
+            return query(sql, new LoanSlipMapper(), id).get(0);
+        return null;
+    }
+
+    @Override
+    public List<LoanSlipModel> searchByCode(String code) {
+        String sql = "Select loanSlip.id, code, idAccount, idBook, loanSlip.created_at, loanSlip.updated_at, title, username, phoneNumber" +
+                " from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id " +
+                " and loanSlip.code like '%" + code + "%' ORDER BY loanSlip.created_at DESC";
+        if (query(sql, new LoanSlipMapper()) != null && !query(sql, new LoanSlipMapper()).isEmpty()) {
+            return query(sql, new LoanSlipMapper());
+        }
+        return null;
     }
 
     @Override
@@ -45,13 +60,19 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
                 " from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id " +
                 " and account.id = ? and loanSlip.code = ?" +
                 " ORDER BY loanSlip.created_at DESC";
-        return query(sql, new LoanSlipMapper(), idAccount, idLoanSlip);
+        if (query(sql, new LoanSlipMapper(), idAccount, idLoanSlip) != null && !query(sql, new LoanSlipMapper(), idAccount, idLoanSlip).isEmpty()) {
+            return query(sql, new LoanSlipMapper(), idAccount, idLoanSlip);
+        }
+        return null;
     }
 
     @Override
     public List<LoanSlipModel> findLoanSlipByQuery(String query) {
         String sql = "Select loanSlip.id, code, idAccount, idBook, loanSlip.created_at, loanSlip.updated_at, title, username, phoneNumber from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id AND code LIKE'" + query + "%' ORDER BY loanSlip.created_at DESC";
-        return query(sql, new LoanSlipMapper());
+        if (query(sql, new LoanSlipMapper()) != null && !query(sql, new LoanSlipMapper()).isEmpty()) {
+            return query(sql, new LoanSlipMapper());
+        }
+        return null;
     }
 
     @Override

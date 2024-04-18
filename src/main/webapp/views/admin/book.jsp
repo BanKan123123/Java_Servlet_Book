@@ -258,6 +258,9 @@
                     </c:forEach>
                 </table>
             </c:if>
+            <c:if test="${empty responseBook}">
+                <%@include file="/views/common/not-found-data.jsp" %>
+            </c:if>
         </div>
 
     </div>

@@ -28,8 +28,18 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String path = "/views/admin/category.jsp";
-        WrapperResponse<CategoryModel> responseCategory = genericHandleAPIAuthor.getMultipleAPIHandle(urlAPICategory, pathInfo);
-        req.setAttribute("responseCategory", responseCategory.getData());
+        WrapperResponse<CategoryModel> responseCategory = null;
+
+        if (req.getParameter("search") != null) {
+            String pathSearch = urlAPICategory + "/search?query=" + req.getParameter("search");
+            responseCategory = genericHandleAPIAuthor.getMultipleAPIHandle(pathSearch, pathInfo);
+        } else {
+            responseCategory = genericHandleAPIAuthor.getMultipleAPIHandle(urlAPICategory, pathInfo);
+        }
+
+        if (responseCategory != null) {
+            req.setAttribute("responseCategory", responseCategory.getData());
+        }
         req.getRequestDispatcher(path).forward(req, resp);
     }
 

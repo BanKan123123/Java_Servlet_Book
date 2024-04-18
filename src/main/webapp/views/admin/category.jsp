@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
     <title>Title</title>
@@ -42,6 +43,15 @@
                 </div>
             </div>
         </div>
+
+        <form style="display: flex; align-items: center" method="GET" action="categories">
+            <div>
+                <label for="search"></label>
+                <input style="width: 90%; " name="search" placeholder="Search..." type="text" class="form-control"
+                       id="search">
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
         <div>
             <c:if test="${not empty responseCategory}">
                 <table class="table table-striped table-hover">
@@ -128,6 +138,9 @@
                     </tbody>
                     </c:forEach>
                 </table>
+            </c:if>
+            <c:if test = "${empty responseCategory}">
+                <%@include file="/views/common/not-found-data.jsp" %>
             </c:if>
         </div>
     </div>

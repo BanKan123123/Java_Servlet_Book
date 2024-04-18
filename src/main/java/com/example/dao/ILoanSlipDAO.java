@@ -11,6 +11,8 @@ public interface ILoanSlipDAO extends GenericDAO<LoanSlipModel> {
 
     LoanSlipModel findOneById(int id);
 
+    List<LoanSlipModel> searchByCode (String code);
+
     List<LoanSlipModel> findByIdLoanSlipAndIdAccount(String idLoanSlip, int idAccount);
 
     List<LoanSlipModel> findLoanSlipByQuery(String query);

@@ -32,6 +32,11 @@ public class LoanSlipService implements ILoanSlipService {
     }
 
     @Override
+    public List<LoanSlipModel> searchByCode(String code) {
+        return loanSlipDAO.searchByCode(code);
+    }
+
+    @Override
     public List<LoanSlipModel> findByIdLoanSlipAndIdAccount(String idLoanSlip, int idAccount) {
         return loanSlipDAO.findByIdLoanSlipAndIdAccount(idLoanSlip, idAccount);
     }
@@ -109,7 +114,7 @@ public class LoanSlipService implements ILoanSlipService {
                 if (path[1].equals("update")) {
                     int id = Integer.parseInt(path[2]);
                     LoanSlipModel saveLoanSlip = update(loanSlipModel, id);
-                    if(saveLoanSlip != null) {
+                    if (saveLoanSlip != null) {
                         ArrayList<LoanSlipModel> list = new ArrayList<>();
                         list.add(saveLoanSlip);
                         responseAPIUtils.updateSuccess(wrapperResponse, list, resp);
@@ -175,7 +180,12 @@ public class LoanSlipService implements ILoanSlipService {
         WrapperResponse<LoanSlipModel> wrapperResponse = new WrapperResponse<>();
 
         if (pathInfo == null || pathInfo.equals("/")) {
-            list = (ArrayList<LoanSlipModel>) findAll();
+            String code = req.getParameter("search");
+            if (code != null) {
+                list = (ArrayList<LoanSlipModel>) searchByCode(code);
+            } else {
+                list = (ArrayList<LoanSlipModel>) findAll();
+            }
         } else {
             String[] path = pathInfo.split("/");
             if (path.length == 5) {
@@ -191,7 +201,7 @@ public class LoanSlipService implements ILoanSlipService {
                 list = (ArrayList<LoanSlipModel>) findByIdLoanSlipAndIdAccount(idLoanSlipStr, idAccount);
             } else if (path.length == 3) {
                 String idLoanSlipStr = path[2];
-                list = (ArrayList<LoanSlipModel>) findOneByIdLoanSlip(String.valueOf(idLoanSlipStr));
+                list = (ArrayList<LoanSlipModel>) findOneByIdLoanSlip(idLoanSlipStr);
             }
         }
         if (list != null && !list.isEmpty()) {
@@ -203,9 +213,10 @@ public class LoanSlipService implements ILoanSlipService {
                 loanSlipModel.setNumberPhone(accountModel.getPhoneNumber());
             }
             responseAPIUtils.getDataSuccess(wrapperResponse, list, resp);
-        } else {
-            responseAPIUtils.notFoundAPI(wrapperResponse, resp);
         }
+//        } else {
+//            responseAPIUtils.notFoundAPI(wrapperResponse, resp);
+//        }
 
 
         mapper.writeValue(resp.getOutputStream(), wrapperResponse);

@@ -3,9 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <jsp:useBean id="date" class="java.util.Date"/>
-<fmt:formatDate var="time"
-                value="${date}"
-                pattern="HHmm"/>
 <html>
 <head>
     <title>Loan Slip List</title>
@@ -202,6 +199,9 @@
                     </tbody>
                     </c:forEach>
                 </table>
+            </c:if>
+            <c:if test="${empty responseLoanSlip}">
+                <%@include file="/views/common/not-found-data.jsp" %>
             </c:if>
         </div>
     </div>
