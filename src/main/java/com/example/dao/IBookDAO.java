@@ -11,6 +11,8 @@ public interface IBookDAO extends GenericDAO<BookModel>{
 
     List<BookModel> findBookByQuery(String query);
 
+    List<BookModel> rangeBookByMonth();
+
     BookModel findOneBookBySlug (String slug);
 
     Long addBook(BookModel bookModel);

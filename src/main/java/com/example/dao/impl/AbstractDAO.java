@@ -3,6 +3,7 @@ package com.example.dao.impl;
 
 import com.example.dao.GenericDAO;
 import com.example.mapper.RowMapper;
+import com.example.model.CategoryModel;
 import com.example.utils.ConfigDB;
 
 import java.sql.*;
@@ -26,7 +27,6 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             }
             return results;
         } catch (Exception ex) {
-
             return null;
         } finally {
             try {
@@ -43,11 +43,16 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         }
     }
 
+    // statement.setString(1, value);
+    //index of slug = 0 1,....n, 0 ....1
+
+    // slug : String
+
     private void setParameter(PreparedStatement statement, Object... parameters) {
         try {
             for (int i = 0; i < parameters.length; i++) {
-                Object parameter = parameters[i];
-                int index = i + 1;
+                Object parameter = parameters[i]; // slug;
+                int index = i + 1; //1
                 if (parameter instanceof Integer) {
                     statement.setInt(index, (int) parameter);
                 } else if (parameter instanceof String) {
@@ -106,24 +111,25 @@ public class AbstractDAO<T> implements GenericDAO<T> {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            Long id = null;
+            Long id = null; // bắt id mới.
             connection = ConfigDB.provideConnection(); //Runtime Exception; And SQLException;
             connection.setAutoCommit(false);
 
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setParameter(statement, parameters);
             statement.executeUpdate(); // INSERT UPDATE, DELETE
-            resultSet = statement.getGeneratedKeys(); //4
+            resultSet = statement.getGeneratedKeys(); //15
             if (resultSet.next()) {
                 id = resultSet.getLong(1);
             }
             connection.commit(); // confirm viec
-            return id;
+            return id; //
         } catch (Exception e) {
             if (connection != null) {
                 try {
                     connection.rollback();
                 } catch (SQLException ex1) {
+                    return null;
                 }
             }
         } finally {

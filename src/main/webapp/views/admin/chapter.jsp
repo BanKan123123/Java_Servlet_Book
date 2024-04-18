@@ -123,7 +123,7 @@
                                                        placeholder="Title...">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="dataEdit" class="form-label">Name</label>
+                                                <label for="dataEdit" class="form-label">Data</label>
                                                 <input value="${chapter.data}" name="data" type="text"
                                                        class="form-control" id="dataEdit"
                                                        placeholder="Data...">
@@ -153,7 +153,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="summary-edit" class="form-label">Summary</label>
-                                                <input value=${chapter.summary} name="summary" type="text"
+                                                <input value="${chapter.summary}" name="summary" type="text"
                                                        class="form-control" id="summary-edit"
                                                        placeholder="Summary...">
                                             </div>

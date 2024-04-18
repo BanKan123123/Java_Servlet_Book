@@ -36,6 +36,11 @@ public class ChapterService implements IChapterService {
     }
 
     @Override
+    public List<ChapterModel> findChapterByBookSlug(String slug) {
+        return chapterDAO.findChapterByBookSlug(slug);
+    }
+
+    @Override
     public ChapterModel save(ChapterModel chapterModel) {
         chapterDAO.addChapter(chapterModel);
         return findOneChapterBySlug(chapterModel.getSlug());
@@ -73,10 +78,8 @@ public class ChapterService implements IChapterService {
                     responseAPIUtils.notFoundAPI(wrapperResponse, resp);
                 }
             } else {
-                ChapterModel chapterModel = findOneChapterBySlug(slug);
-                if (chapterModel != null) {
-                    ArrayList<ChapterModel> chapters = new ArrayList<>();
-                    chapters.add(chapterModel);
+                ArrayList<ChapterModel> chapters = (ArrayList<ChapterModel>) findChapterByBookSlug(slug);
+                if (chapters != null) {
                     responseAPIUtils.getDataSuccess(wrapperResponse, chapters, resp);
                 } else {
                     responseAPIUtils.notFoundAPI(wrapperResponse, resp);

@@ -25,9 +25,8 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
     public List<LoanSlipModel> findOneByCode(String id) {
         String sql = "Select loanSlip.id, code, idAccount, idBook, loanSlip.created_at, loanSlip.updated_at, title, username, phoneNumber" +
                 " from loanSlip, books, account where loanSlip.idBook = books.id and loanSlip.idAccount = account.id " +
-                " and loanSlip.code = ?" +
-                " ORDER BY loanSlip.created_at DESC";
-        return query(sql, new LoanSlipMapper(), id);
+                " and loanSlip.code like '%" + id + "%' ORDER BY loanSlip.created_at DESC";
+        return query(sql, new LoanSlipMapper());
     }
 
     @Override
@@ -59,14 +58,14 @@ public class LoanSlipDAO extends AbstractDAO<LoanSlipModel> implements ILoanSlip
     public boolean isExistBookInLoanSlip(String code, int idBook) {
         String sql = "Select * from loanSlip where code = ? and idBook = ?";
         List<LoanSlipModel> list = query(sql, new LoanSlipMapper(), code, idBook);
-        return list.isEmpty();
+        return !list.isEmpty();
     }
 
     @Override
     public boolean isExistCode(String code) {
         String sql = "Select * from loanslip where code = ?";
         List<LoanSlipModel> list = query(sql, new LoanSlipMapper(), code);
-        return list.isEmpty();
+        return !list.isEmpty();
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "IPFilter", urlPatterns = {"/*"})
+//@WebFilter(filterName = "IPFilter", urlPatterns = {"/*"})
 public class IPFilter implements Filter {
 
     private static final Logger LOGGER = LogManager.getLogger(CORSFilter.class);

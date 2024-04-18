@@ -13,6 +13,8 @@ public interface IBookService {
 
     List<BookModel> findBookByQuery(String query);
 
+    List<BookModel> rangeBookByMonth();
+
     BookModel save(BookModel bookModel);
 
     void delete(String slug);

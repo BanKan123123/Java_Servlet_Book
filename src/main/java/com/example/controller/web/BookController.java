@@ -65,7 +65,7 @@ public class BookController extends HttpServlet {
             }
         } else {
             String jsonBook = new BookParamMapper().mapperParam(req);
-            genericHandleAPI.postAPIHandle(urlAPICategory, jsonBook, resp, mapper);
+            genericHandleAPI.postAPIHandle(urlAPIBook, jsonBook, resp, mapper);
             resp.sendRedirect(req.getContextPath() + "/book");
         }
     }

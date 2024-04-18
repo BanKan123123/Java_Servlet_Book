@@ -5,6 +5,7 @@ import com.example.model.CategoryModel;
 import com.example.paramMapper.CategoryParamMapper;
 import com.example.wrapper.WrapperResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

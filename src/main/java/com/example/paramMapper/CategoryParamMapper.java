@@ -16,5 +16,4 @@ public class CategoryParamMapper implements IMapperParam{
         CategoryModel categoryModel = new CategoryModel(name, slug);
         return mapper.writeValueAsString(categoryModel);
     }
-
 }

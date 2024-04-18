@@ -24,6 +24,7 @@ public class ChapterParamMapper implements IMapperParam {
         String summary = req.getParameter("summary");
 
         ChapterModel chapterModel = new ChapterModel(bookModel, chapterIndex, title, slug, data, audioUrl, summary);
+
         return mapper.writeValueAsString(chapterModel);
     }
 }

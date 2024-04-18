@@ -19,16 +19,7 @@
 
     <div class="main-book">
         <div class="main-title">
-            <h1>API Data</h1>
-
-            <form method = "GET" action = "book">
-                <div class="mb-3">
-                    <label for="search"></label>
-                    <input name = "search" placeholder="Search..." type="text" class="form-control" id="search">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-            </form>
+            <h1>Books List</h1>
 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-book">
                 Add Book
@@ -44,16 +35,18 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input name="title" type="text" class="form-control" id="title" placeholder="Title...">
+                                <input required name="title" type="text" class="form-control" id="title"
+                                       placeholder="Title...">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <input name="description" type="text" class="form-control" id="description">
+                                <input required name="description" type="text" class="form-control" id="description">
                             </div>
 
                             <div class="mb-3">
                                 <label for="author" class="form-label">Author</label>
-                                <select name="author" id="author" data-placeholder="Choose author" class="form-select"
+                                <select required name="author" id="author" data-placeholder="Choose author"
+                                        class="form-select"
                                         aria-label="Default select example">
                                     <c:forEach var="author" items="${responseAuthor}">
                                         <option value="${author.slug}">${author.name}</option>
@@ -62,7 +55,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="select-categories" class="form-label">Categories</label>
-                                <select name="category" id="select-categories" multiple>
+                                <select required name="category" id="select-categories" multiple>
                                     <c:forEach var="category" items="${responseCategory}">--%>
                                         <option value="${category.slug}">${category.name}</option>
                                     </c:forEach>
@@ -70,20 +63,21 @@
                             </div>
                             <div class="mb-3">
                                 <label for="quantity" class="form-label">Quantity</label>
-                                <input name="quantity" type="text" class="form-control" id="quantity">
+                                <input required name="quantity" type="text" class="form-control" id="quantity">
                             </div>
 
                             <div class="mb-3">
                                 <label for="rate" class="form-label">Rate</label>
-                                <input name="rate" type="text" class="form-control" id="rate">
+                                <input required name="rate" type="text" class="form-control" id="rate">
                             </div>
                             <div class="mb-3">
                                 <label for="liked" class="form-label">Liked</label>
-                                <input name="liked" type="text" class="form-control" id="liked">
+                                <input required name="liked" type="text" class="form-control" id="liked">
                             </div>
-                            <div class="mb-3 form-check">
-                                <input name="image-thumbnail" type="file" class="form-control" id="image-thumbnail">
+                            <div class="mb-3">
                                 <label class="form-label" for="image-thumbnail">Image Thumbnail</label>
+                                <input required name="image-thumbnail" type="file" class="form-control"
+                                       id="image-thumbnail">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -94,7 +88,16 @@
                 </div>
             </div>
         </div>
+
         <div>
+            <form style="display: flex; align-items: center" method="GET" action="book">
+                <div>
+                    <label for="search"></label>
+                    <input style="width: 90%; " name="search" placeholder="Search..." type="text" class="form-control"
+                           id="search">
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </form>
             <c:if test="${not empty responseBook}">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -120,8 +123,11 @@
                         <td><span> ${book.description}</span></td>
                         <td><span> ${book.authors.name}</span></td>
                         <td>
-                            <c:forEach var="category" items="${book.categories}">
-                                <span> ${category.name}, </span>
+                            <c:forEach var="category" items="${book.categories}" varStatus="loop">
+                                <span>${category.name}</span>
+                                <c:if test="${!loop.last}">
+                                    <span>,</span>
+                                </c:if>
                             </c:forEach>
                         </td>
                         <td><span> ${book.rate} </span></td>
@@ -146,20 +152,22 @@
                                         <div class="modal-body">
                                             <div class="mb-3">
                                                 <label for="titleEdit" class="form-label">Title</label>
-                                                <input value="${book.title}" name="title" type="text"
+                                                <input required value="${book.title}" name="title" type="text"
                                                        class="form-control" id="titleEdit"
                                                        placeholder="Title...">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="descriptionEdit" class="form-label">Description</label>
-                                                <input value="${book.description}" name="description" type="text"
+                                                <input required value="${book.description}" name="description"
+                                                       type="text"
                                                        class="form-control"
                                                        id="descriptionEdit">
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="authorEdit" class="form-label">Author</label>
-                                                <select name="author" id="authorEdit" data-placeholder="Choose author"
+                                                <select required name="author" id="authorEdit"
+                                                        data-placeholder="Choose author"
                                                         class="form-select"
                                                         aria-label="Default select example">
                                                     <c:forEach var="author" items="${responseAuthor}">
@@ -171,7 +179,7 @@
                                             <div class="mb-3">
                                                 <label for="select-categories-edit"
                                                        class="form-label">Categories</label>
-                                                <select name="category" id="select-categories-edit" multiple>
+                                                <select required name="category" id="select-categories-edit" multiple>
                                                     <c:forEach var="category" items="${responseCategory}">--%>
                                                         <option ${book.categories.contains(category) ? 'selected' : ''}
                                                                 value="${category.slug}">${category.name}</option>
@@ -180,26 +188,29 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="quantity-edit" class="form-label">Quantity</label>
-                                                <input value="${book.quantity}" name="quantity" type="text"
+                                                <input required value="${book.quantity}" name="quantity" type="text"
                                                        class="form-control"
                                                        id="quantity-edit">
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="rate-edit" class="form-label">Rate</label>
-                                                <input value="${book.rate}" name="rate" type="text" class="form-control"
+                                                <input required value="${book.rate}" name="rate" type="text"
+                                                       class="form-control"
                                                        id="rate-edit">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="liked-edit" class="form-label">Liked</label>
-                                                <input value="${book.liked}" name="liked" type="text"
+                                                <input required value="${book.liked}" name="liked" type="text"
                                                        class="form-control" id="liked-edit">
                                             </div>
-                                            <div class="mb-3 form-check">
-                                                <input value="${book.imageThumbnail}" name="image-thumbnail" type="file"
+                                            <div class="mb-3">
+                                                <label class="form-label" for="image-thumbnail">Image Thumbnail</label>
+
+                                                <input value="${book.imageThumbnail}" name="image-thumbnail"
+                                                       type="file"
                                                        class="form-control"
                                                        id="image-thumbnail-edit">
-                                                <label class="form-label" for="image-thumbnail">Image Thumbnail</label>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

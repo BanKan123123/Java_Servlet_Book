@@ -34,9 +34,15 @@ public class LoanSlipController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
         String path = "/views/admin/loanSlip.jsp";
-        WrapperResponse<LoanSlipModel> responseLoanSlip = genericHandleAPI.getMultipleAPIHandle(urlAPILoanSlip, pathInfo);
+        WrapperResponse<LoanSlipModel> responseLoanSlip;
         WrapperResponse<BookModel> responseBook = genericHandleAPIBook.getMultipleAPIHandle(urlAPIBook, pathInfo);
         WrapperResponse<AccountModel> responseAccount = genericHandleAPIAccount.getMultipleAPIHandle(urlAPIAccount, pathInfo);
+        if (req.getParameter("search") != null && !req.getParameter("search").isEmpty()) {
+            String pathSearch = urlAPILoanSlip + "/code/" + req.getParameter("search");
+            responseLoanSlip = genericHandleAPI.getMultipleAPIHandle(pathSearch, pathInfo);
+        } else {
+            responseLoanSlip = genericHandleAPI.getMultipleAPIHandle(urlAPILoanSlip, pathInfo);
+        }
         req.setAttribute("responseLoanSlip", responseLoanSlip.getData());
         req.setAttribute("responseBook", responseBook.getData());
         req.setAttribute("responseAccount", responseAccount.getData());
@@ -49,18 +55,18 @@ public class LoanSlipController extends HttpServlet {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
         String action = req.getParameter("action");
-        if(action != null) {
-            if(action.equals("update")) {
+        if (action != null) {
+            if (action.equals("update")) {
                 doPut(req, resp);
-                resp.sendRedirect(req.getContextPath() +"/loan-slip");
-            }else if(action.equals("delete")) {
+                resp.sendRedirect(req.getContextPath() + "/loan-slip");
+            } else if (action.equals("delete")) {
                 doDelete(req, resp);
-                resp.sendRedirect(req.getContextPath() +"/loan-slip");
+                resp.sendRedirect(req.getContextPath() + "/loan-slip");
             }
         } else {
             String jsonLoanSlip = LoanSlipParamMapper.mapperParam(req);
             genericHandleAPI.postAPIHandle(urlAPILoanSlip, jsonLoanSlip, resp, mapper);
-            resp.sendRedirect(req.getContextPath() +"/loan-slip");
+            resp.sendRedirect(req.getContextPath() + "/loan-slip");
         }
     }
 
@@ -69,7 +75,7 @@ public class LoanSlipController extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String action = req.getParameter("action");
         String id = req.getParameter("id");
-        String urlAPI =  "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-loan-slip/" + action + "/" + id;
+        String urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-loan-slip/" + action + "/" + id;
         String jsonLoanSlip = LoanSlipParamMapper.mapperParam(req);
         genericHandleAPI.putAPIHandel(urlAPI, jsonLoanSlip, resp, mapper);
     }
@@ -79,7 +85,7 @@ public class LoanSlipController extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         String action = req.getParameter("action");
         String id = req.getParameter("id");
-        String urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-loan-slip/" +action + "/" + id;
+        String urlAPI = "http://localhost:8080/demo2-1.0-SNAPSHOT/api-admin-loan-slip/" + action + "/" + id;
         genericHandleAPI.deleteAPIHandel(urlAPI, resp, mapper);
     }
 }

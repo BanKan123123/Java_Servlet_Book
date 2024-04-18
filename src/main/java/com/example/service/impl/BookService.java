@@ -42,6 +42,11 @@ public class BookService implements IBookService {
     }
 
     @Override
+    public List<BookModel> rangeBookByMonth() {
+        return bookDAO.rangeBookByMonth();
+    }
+
+    @Override
     public BookModel save(BookModel bookModel) {
         Long idBook = bookDAO.addBook(bookModel);
         bookDAO.addCategoriesOnBook(bookModel.getCategories(), idBook);
@@ -84,6 +89,9 @@ public class BookService implements IBookService {
                 } else {
                     responseAPIUtils.notFoundAPI(wrapperResponse, resp);
                 }
+            } else if (slug.equals("range")) {
+                ArrayList<BookModel> listBooks = (ArrayList<BookModel>) rangeBookByMonth();
+                responseAPIUtils.getDataSuccess(wrapperResponse, listBooks, resp);
             } else {
                 BookModel bookModel = findOneBookBySlug(slug);
                 if (bookModel != null) {

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(filterName = "CORSFilter", urlPatterns = {"/*"})
+//@WebFilter(filterName = "CORSFilter", urlPatterns = {"/*"})
 public class CORSFilter implements Filter {
 
     private static final Logger LOGGER = LogManager.getLogger(CORSFilter.class);

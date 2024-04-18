@@ -12,6 +12,8 @@ public interface IChapterService {
 
     List<ChapterModel> findChapterByQuery(String query);
 
+    List<ChapterModel> findChapterByBookSlug(String slug);
+
     ChapterModel save(ChapterModel chapterModel);
 
     void delete(String slug);

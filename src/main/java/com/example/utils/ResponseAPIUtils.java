@@ -1,6 +1,7 @@
 package com.example.utils;
 
 import com.example.wrapper.WrapperResponse;
+import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 

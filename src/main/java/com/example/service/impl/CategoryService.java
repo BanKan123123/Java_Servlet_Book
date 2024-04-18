@@ -35,15 +35,8 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryModel save(CategoryModel categoryModel) {
-        if (categoryModel.getName().isEmpty() || categoryModel.getSlug().isEmpty()) {
-            return null;
-        } else {
-            if (categoryDAO.addCategory(categoryModel) == null) {
-                return null;
-            } else {
-                return findOneCategoryBySlug(categoryModel.getSlug());
-            }
-        }
+        categoryDAO.addCategory(categoryModel);
+        return categoryDAO.findOneCategory(categoryModel.getSlug());
     }
 
     @Override
@@ -100,7 +93,7 @@ public class CategoryService implements ICategoryService {
 
         CategoryModel categoryModel = HttpUtil.of(req.getReader()).toModel(CategoryModel.class);
 
-        if (categoryModel.getName() == null || categoryModel.getName().isEmpty()) {
+        if (categoryModel.getName() == null || categoryModel.getName().isEmpty() || categoryModel.getSlug() == null || categoryModel.getSlug().isEmpty()) {
             responseAPIUtils.requiredDataAPI(wrapperResponse, resp);
         } else {
             CategoryModel findCategory = findOneCategoryBySlug(categoryModel.getSlug());

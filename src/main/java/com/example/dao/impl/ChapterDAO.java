@@ -22,10 +22,18 @@ public class ChapterDAO extends AbstractDAO<ChapterModel> implements IChapterDAO
         return query(sql, new ChapterMapper(), slug).get(0);
     }
 
+
+
     @Override
     public List<ChapterModel> findChapterByQuery(String query) {
         String sql = "SELECT * FROM books, author, chapter WHERE books.authorId = author.id AND books.id = chapter.bookId AND chapter.title LIKE '%" + query + "%' ORDER BY books.title ASC";
         return query(sql, new ChapterMapper());
+    }
+
+    @Override
+    public List<ChapterModel> findChapterByBookSlug(String slug) {
+        String sql = "SELECT * FROM books, author, chapter WHERE books.authorId = author.id AND books.id = chapter.bookId AND books.slug = ? ORDER BY books.title ASC";
+        return query(sql, new ChapterMapper(), slug);
     }
 
     @Override
